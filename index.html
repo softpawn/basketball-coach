@@ -1,0 +1,1768 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>농구 훈련 코치</title>
+
+<!-- ── PWA / 홈 화면 설정 ── -->
+<meta name="application-name" content="농구코치">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="농구코치">
+<meta name="theme-color" content="#FF6B1A">
+<meta name="mobile-web-app-capable" content="yes">
+
+<!-- 아이콘: 검정 배경 + 오렌지 농구공 + "농구코치" 텍스트 (base64 SVG) -->
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTYgMjU2Ij4KICA8ZGVmcz4KICAgIDxyYWRpYWxHcmFkaWVudCBpZD0iYmciIGN4PSI0MCUiIGN5PSIzNSUiIHI9IjYwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMyYTEwMDAiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMEQwRDBEIi8+CiAgICA8L3JhZGlhbEdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMjU2IiBoZWlnaHQ9IjI1NiIgcng9IjU0IiBmaWxsPSJ1cmwoI2JnKSIvPgogIDxjaXJjbGUgY3g9IjEyOCIgY3k9IjExMiIgcj0iNzIiIGZpbGw9IiNGRjZCMUEiLz4KICA8Y2lyY2xlIGN4PSIxMjgiIGN5PSIxMTIiIHI9IjcyIiBmaWxsPSJub25lIiBzdHJva2U9IiNjYzUwMDAiIHN0cm9rZS13aWR0aD0iMyIvPgogIDxsaW5lIHgxPSI1NiIgeTE9IjExMiIgeDI9IjIwMCIgeTI9IjExMiIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjMuNSIgc3Ryb2tlLW9wYWNpdHk9IjAuMzUiLz4KICA8bGluZSB4MT0iMTI4IiB5MT0iNDAiIHgyPSIxMjgiIHkyPSIxODQiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIzLjUiIHN0cm9rZS1vcGFjaXR5PSIwLjM1Ii8+CiAgPHBhdGggZD0iTTY4IDgyIFExMTggMTEyIDU4IDE0MiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjMuNSIgc3Ryb2tlLW9wYWNpdHk9IjAuMzUiLz4KICA8cGF0aCBkPSJNMTg4IDgyIFExMzggMTEyIDE5OCAxNDIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIzLjUiIHN0cm9rZS1vcGFjaXR5PSIwLjM1Ii8+CiAgPHRleHQgeD0iMTI4IiB5PSIyMjQiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjI0IiBmb250LXdlaWdodD0iOTAwIiBmaWxsPSIjRkY2QjFBIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7rho3qtazsvZTsuZg8L3RleHQ+Cjwvc3ZnPg==">
+
+<!-- PWA Manifest (인라인 Blob — Android 홈 화면 아이콘) -->
+<script>
+(function(){
+  const icon = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTYgMjU2Ij4KICA8ZGVmcz4KICAgIDxyYWRpYWxHcmFkaWVudCBpZD0iYmciIGN4PSI0MCUiIGN5PSIzNSUiIHI9IjYwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMyYTEwMDAiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMEQwRDBEIi8+CiAgICA8L3JhZGlhbEdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMjU2IiBoZWlnaHQ9IjI1NiIgcng9IjU0IiBmaWxsPSJ1cmwoI2JnKSIvPgogIDxjaXJjbGUgY3g9IjEyOCIgY3k9IjExMiIgcj0iNzIiIGZpbGw9IiNGRjZCMUEiLz4KICA8Y2lyY2xlIGN4PSIxMjgiIGN5PSIxMTIiIHI9IjcyIiBmaWxsPSJub25lIiBzdHJva2U9IiNjYzUwMDAiIHN0cm9rZS13aWR0aD0iMyIvPgogIDxsaW5lIHgxPSI1NiIgeTE9IjExMiIgeDI9IjIwMCIgeTI9IjExMiIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjMuNSIgc3Ryb2tlLW9wYWNpdHk9IjAuMzUiLz4KICA8bGluZSB4MT0iMTI4IiB5MT0iNDAiIHgyPSIxMjgiIHkyPSIxODQiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIzLjUiIHN0cm9rZS1vcGFjaXR5PSIwLjM1Ii8+CiAgPHBhdGggZD0iTTY4IDgyIFExMTggMTEyIDU4IDE0MiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjMuNSIgc3Ryb2tlLW9wYWNpdHk9IjAuMzUiLz4KICA8cGF0aCBkPSJNMTg4IDgyIFExMzggMTEyIDE5OCAxNDIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIzLjUiIHN0cm9rZS1vcGFjaXR5PSIwLjM1Ii8+CiAgPHRleHQgeD0iMTI4IiB5PSIyMjQiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjI0IiBmb250LXdlaWdodD0iOTAwIiBmaWxsPSIjRkY2QjFBIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7rho3qtazsvZTsuZg8L3RleHQ+Cjwvc3ZnPg==";
+  const manifest = {
+    name:"농구 훈련 코치", short_name:"농구코치",
+    description:"혼자도 강해질 수 있다! 농구 드릴 트레이닝 앱",
+    start_url:"./", display:"standalone",
+    background_color:"#0D0D0D", theme_color:"#FF6B1A",
+    orientation:"portrait",
+    icons:[
+      {src:icon, sizes:"192x192", type:"image/svg+xml"},
+      {src:icon, sizes:"512x512", type:"image/svg+xml"}
+    ]
+  };
+  const blob = new Blob([JSON.stringify(manifest)],{type:'application/json'});
+  const l = document.createElement('link');
+  l.rel='manifest'; l.href=URL.createObjectURL(blob);
+  document.head.appendChild(l);
+})();
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #FF6B1A;
+    --orange-light: #FF8C4A;
+    --orange-dim: rgba(255,107,26,0.15);
+    --dark: #0D0D0D;
+    --dark2: #1A1A1A;
+    --dark3: #252525;
+    --dark4: #303030;
+    --text: #F0F0F0;
+    --text-dim: #888;
+    --green: #3DDC84;
+    --yellow: #FFD60A;
+    --blue: #4DA6FF;
+    --purple: #B86EFF;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .header {
+    background: var(--dark2);
+    padding: 16px 20px 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 2px solid var(--orange);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .header-back {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--orange);
+    font-size: 22px;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .header-title { font-family: 'Black Han Sans', sans-serif; font-size: 20px; color: var(--orange); letter-spacing: 1px; }
+  .header-sub { font-size: 11px; color: var(--text-dim); margin-top: 1px; }
+  .ball-icon { font-size: 22px; }
+
+  .screen { display: none; padding: 20px 16px 100px; }
+  .screen.active { display: block; }
+
+  .greeting { margin-bottom: 24px; }
+  .greeting h2 { font-family: 'Black Han Sans', sans-serif; font-size: 26px; line-height: 1.3; }
+  .greeting h2 span { color: var(--orange); }
+  .greeting p { color: var(--text-dim); font-size: 13px; margin-top: 6px; }
+
+  .section-label {
+    font-size: 11px; font-weight: 700; color: var(--orange);
+    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px;
+  }
+
+  .category-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 32px; }
+  .cat-card {
+    background: var(--dark3); border: 1px solid var(--dark4);
+    border-radius: 16px; padding: 18px 14px; cursor: pointer;
+    transition: all 0.2s; position: relative; overflow: hidden;
+  }
+  .cat-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 3px; border-radius: 16px 16px 0 0;
+  }
+  .cat-card[data-cat="dribble"]::before { background: var(--orange); }
+  .cat-card[data-cat="shooting"]::before { background: var(--yellow); }
+  .cat-card[data-cat="footwork"]::before { background: var(--green); }
+  .cat-card[data-cat="full"]::before { background: var(--purple); }
+  .cat-card:active { transform: scale(0.97); }
+  .cat-icon { font-size: 30px; margin-bottom: 8px; }
+  .cat-name { font-family: 'Black Han Sans', sans-serif; font-size: 15px; margin-bottom: 4px; }
+  .cat-desc { font-size: 11px; color: var(--text-dim); line-height: 1.4; }
+  .cat-count { font-size: 10px; color: var(--text-dim); margin-top: 8px; }
+
+  .today-card {
+    background: linear-gradient(135deg, var(--dark3) 0%, #1e1500 100%);
+    border: 1px solid var(--orange); border-radius: 16px;
+    padding: 20px; margin-bottom: 32px; cursor: pointer; transition: all 0.2s;
+  }
+  .today-card:active { transform: scale(0.98); }
+  .today-badge {
+    display: inline-block; background: var(--orange); color: white;
+    font-size: 10px; font-weight: 700; padding: 3px 8px;
+    border-radius: 20px; margin-bottom: 10px; letter-spacing: 1px;
+  }
+  .today-title { font-family: 'Black Han Sans', sans-serif; font-size: 18px; margin-bottom: 6px; }
+  .today-meta { display: flex; gap: 16px; font-size: 12px; color: var(--text-dim); }
+  .today-meta span { display: flex; align-items: center; gap: 4px; }
+
+  .level-tabs {
+    display: flex; gap: 8px; margin-bottom: 20px;
+    overflow-x: auto; padding-bottom: 4px; scrollbar-width: none;
+  }
+  .level-tabs::-webkit-scrollbar { display: none; }
+  .level-tab {
+    flex-shrink: 0; background: var(--dark3); border: 1px solid var(--dark4);
+    border-radius: 20px; padding: 7px 16px; font-size: 13px;
+    color: var(--text-dim); cursor: pointer; transition: all 0.2s; white-space: nowrap;
+  }
+  .level-tab.active { background: var(--orange); border-color: var(--orange); color: white; font-weight: 700; }
+
+  .routine-card {
+    background: var(--dark3); border: 1px solid var(--dark4);
+    border-radius: 16px; padding: 18px; margin-bottom: 12px;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .routine-card:active { transform: scale(0.98); }
+  .routine-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+  .routine-title { font-family: 'Black Han Sans', sans-serif; font-size: 16px; flex: 1; }
+  .routine-level { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 20px; margin-left: 8px; flex-shrink: 0; }
+  .level-beginner { background: rgba(61,220,132,0.2); color: var(--green); }
+  .level-intermediate { background: rgba(255,214,10,0.2); color: var(--yellow); }
+  .level-advanced { background: rgba(255,107,26,0.2); color: var(--orange); }
+  .routine-drills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .drill-tag { background: var(--dark4); font-size: 11px; color: var(--text-dim); padding: 3px 8px; border-radius: 6px; }
+  .routine-footer { display: flex; justify-content: space-between; align-items: center; }
+  .routine-time { font-size: 12px; color: var(--text-dim); display: flex; align-items: center; gap: 4px; }
+  .routine-start-btn {
+    background: var(--orange); color: white; border: none;
+    border-radius: 20px; padding: 7px 18px; font-size: 13px;
+    font-weight: 700; cursor: pointer; font-family: 'Noto Sans KR', sans-serif;
+  }
+
+  /* ── 훈련 화면 ── */
+  .training-progress { background: var(--dark3); border-radius: 12px; padding: 16px; margin-bottom: 20px; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-dim); margin-bottom: 8px; }
+  .progress-bar { height: 6px; background: var(--dark4); border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--orange); border-radius: 3px; transition: width 0.4s ease; }
+
+  .drill-card {
+    background: var(--dark3); border: 1px solid var(--dark4);
+    border-radius: 20px; padding: 20px; margin-bottom: 16px;
+  }
+  .drill-number { font-size: 11px; color: var(--orange); font-weight: 700; letter-spacing: 2px; margin-bottom: 6px; }
+  .drill-name { font-family: 'Black Han Sans', sans-serif; font-size: 22px; margin-bottom: 14px; }
+
+  /* ── SVG 애니메이션 영역 ── */
+  .drill-visual {
+    background: #111;
+    border-radius: 14px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--dark4);
+  }
+  .drill-visual svg { display: block; width: 100%; }
+
+  /* 유튜브 버튼 */
+  .youtube-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #FF0000;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 16px;
+    width: 100%;
+    justify-content: center;
+    font-family: 'Noto Sans KR', sans-serif;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .youtube-btn:active { transform: scale(0.97); opacity: 0.9; }
+  .youtube-icon { font-size: 18px; }
+
+  .drill-desc { font-size: 14px; color: var(--text-dim); line-height: 1.7; margin-bottom: 16px; }
+  .drill-tip {
+    background: var(--orange-dim); border-left: 3px solid var(--orange);
+    border-radius: 0 8px 8px 0; padding: 10px 14px; font-size: 13px;
+    color: var(--orange-light); margin-bottom: 20px; line-height: 1.5;
+  }
+  .drill-meta-row { display: flex; gap: 12px; margin-bottom: 20px; }
+  .drill-meta-item { background: var(--dark4); border-radius: 10px; padding: 10px 14px; text-align: center; flex: 1; }
+  .drill-meta-item .val { font-family: 'Black Han Sans', sans-serif; font-size: 18px; color: var(--orange); }
+  .drill-meta-item .lbl { font-size: 10px; color: var(--text-dim); margin-top: 2px; }
+
+  .timer-section {
+    background: var(--dark2); border: 2px solid var(--dark4);
+    border-radius: 16px; padding: 20px; text-align: center; margin-bottom: 20px;
+  }
+  .timer-display {
+    font-family: 'Black Han Sans', sans-serif; font-size: 56px;
+    color: var(--orange); letter-spacing: 2px; line-height: 1;
+    margin-bottom: 16px; transition: color 0.3s;
+  }
+  .timer-display.warning { color: var(--yellow); }
+  .timer-display.done { color: var(--green); }
+  .timer-controls { display: flex; gap: 10px; justify-content: center; }
+  .timer-btn {
+    border: none; border-radius: 12px; padding: 12px 24px;
+    font-size: 15px; font-weight: 700; cursor: pointer;
+    transition: all 0.2s; font-family: 'Noto Sans KR', sans-serif;
+  }
+  .timer-btn.start { background: var(--orange); color: white; }
+  .timer-btn.reset { background: var(--dark4); color: var(--text-dim); }
+  .timer-btn:active { transform: scale(0.95); }
+
+  .complete-btn {
+    width: 100%; background: var(--green); color: var(--dark);
+    border: none; border-radius: 16px; padding: 16px; font-size: 16px;
+    font-weight: 700; cursor: pointer; font-family: 'Noto Sans KR', sans-serif;
+    transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .complete-btn:active { transform: scale(0.98); }
+  .complete-btn.done-drill { background: var(--dark4); color: var(--text-dim); text-decoration: line-through; }
+
+  .finish-screen { text-align: center; padding: 40px 20px; }
+  .finish-emoji { font-size: 64px; margin-bottom: 20px; }
+  .finish-title { font-family: 'Black Han Sans', sans-serif; font-size: 30px; margin-bottom: 10px; }
+  .finish-title span { color: var(--orange); }
+  .finish-sub { color: var(--text-dim); font-size: 14px; margin-bottom: 30px; }
+  .finish-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 30px; }
+  .stat-box { background: var(--dark3); border-radius: 14px; padding: 18px; }
+  .stat-val { font-family: 'Black Han Sans', sans-serif; font-size: 28px; color: var(--orange); }
+  .stat-lbl { font-size: 12px; color: var(--text-dim); margin-top: 4px; }
+  .finish-btns { display: flex; flex-direction: column; gap: 10px; }
+  .btn-primary {
+    background: var(--orange); color: white; border: none; border-radius: 14px;
+    padding: 15px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'Noto Sans KR', sans-serif;
+  }
+  .btn-secondary {
+    background: var(--dark3); color: var(--text); border: 1px solid var(--dark4);
+    border-radius: 14px; padding: 15px; font-size: 15px; cursor: pointer; font-family: 'Noto Sans KR', sans-serif;
+  }
+
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--dark2); border-top: 1px solid var(--dark4); display: flex; z-index: 100;
+  }
+  .nav-item {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    padding: 10px 0 14px; cursor: pointer; transition: all 0.2s;
+    border: none; background: none; color: var(--text-dim); font-family: 'Noto Sans KR', sans-serif;
+  }
+  .nav-item.active { color: var(--orange); }
+  .nav-item .nav-icon { font-size: 22px; margin-bottom: 3px; }
+  .nav-item .nav-label { font-size: 10px; font-weight: 500; }
+
+  .record-empty { text-align: center; padding: 60px 20px; color: var(--text-dim); }
+  .record-empty .icon { font-size: 48px; margin-bottom: 16px; }
+  .record-item {
+    background: var(--dark3); border-radius: 14px; padding: 16px;
+    margin-bottom: 10px; display: flex; align-items: center; gap: 14px;
+  }
+  .record-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--orange); flex-shrink: 0; }
+  .record-info { flex: 1; }
+  .record-name { font-size: 14px; font-weight: 500; }
+  .record-date { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+  .record-badge { font-size: 11px; background: var(--orange-dim); color: var(--orange); padding: 3px 10px; border-radius: 20px; }
+
+  .drill-list-mini {
+    display: flex; gap: 8px; overflow-x: auto;
+    padding-bottom: 4px; margin-bottom: 20px; scrollbar-width: none;
+  }
+  .drill-list-mini::-webkit-scrollbar { display: none; }
+  .drill-dot {
+    flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%;
+    background: var(--dark4); display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: var(--text-dim); border: 2px solid transparent;
+  }
+  .drill-dot.current { border-color: var(--orange); color: var(--orange); background: var(--orange-dim); }
+  .drill-dot.completed { background: var(--green); color: var(--dark); }
+
+  /* SVG 공통 애니메이션 */
+  @keyframes bounce-ball { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-18px)} }
+  @keyframes slide-lr { 0%,100%{transform:translateX(0)} 50%{transform:translateX(120px)} }
+  @keyframes slide-rl { 0%,100%{transform:translateX(120px)} 50%{transform:translateX(0)} }
+  @keyframes cross-r { 0%,100%{transform:translateX(0) scaleX(1)} 50%{transform:translateX(60px) scaleX(-1)} }
+  @keyframes cross-l { 0%,100%{transform:translateX(60px) scaleX(-1)} 50%{transform:translateX(0) scaleX(1)} }
+  @keyframes zigzag { 0%{transform:translate(0,0)} 25%{transform:translate(40px,-30px)} 50%{transform:translate(80px,0)} 75%{transform:translate(120px,-30px)} 100%{transform:translate(160px,0)} }
+  @keyframes arc-up { 0%{transform:translateY(0) translateX(0)} 50%{transform:translateY(-50px) translateX(60px)} 100%{transform:translateY(0) translateX(120px)} }
+  @keyframes shot-arc { 0%{transform:translate(0,0)} 40%{transform:translate(30px,-80px)} 70%{transform:translate(70px,-60px)} 100%{transform:translate(90px,-20px)} }
+  @keyframes layup-step { 0%{transform:translate(0,0)} 60%{transform:translate(60px,-10px)} 80%{transform:translate(75px,-35px)} 100%{transform:translate(80px,-20px)} }
+  @keyframes slide-def { 0%,100%{transform:translateX(0)} 50%{transform:translateX(80px)} }
+  @keyframes pivot-rot { 0%,100%{transform:rotate(0deg)} 50%{transform:rotate(180deg)} }
+  @keyframes euroStep { 0%{transform:translate(0,0)} 40%{transform:translate(50px,0)} 60%{transform:translate(70px,-20px)} 80%{transform:translate(100px,20px)} 100%{transform:translate(120px,0)} }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(0.85)} }
+  @keyframes dash-move { to{stroke-dashoffset:-20} }
+  @keyframes behind-back { 0%{transform:translateX(0) translateY(0)} 30%{transform:translateX(20px) translateY(10px)} 60%{transform:translateX(40px) translateY(-5px)} 100%{transform:translateX(60px) translateY(0)} }
+  @keyframes legthru { 0%{transform:translate(0,0)} 40%{transform:translate(15px, 15px)} 60%{transform:translate(30px,-10px)} 100%{transform:translate(50px,0)} }
+  @keyframes spot-move { 0%{transform:translate(0,0)} 20%{transform:translate(-40px,20px)} 40%{transform:translate(-20px,50px)} 60%{transform:translate(20px,20px)} 80%{transform:translate(40px,50px)} 100%{transform:translate(0,0)} }
+  @keyframes stepback { 0%{transform:translate(80px,0)} 50%{transform:translate(20px,0)} 100%{transform:translate(80px,0)} }
+  @keyframes vcut { 0%{transform:translate(80px,60px)} 40%{transform:translate(30px,30px)} 60%{transform:translate(60px,10px)} 100%{transform:translate(80px,60px)} }
+  @keyframes free-throw { 0%{transform:translate(0,0)} 30%{transform:translate(0,-10px)} 60%{transform:translate(50px,-80px)} 80%{transform:translate(80px,-50px)} 100%{transform:translate(85px,-30px)} }
+  @keyframes clock-move { 0%{transform:translate(50px,0)} 25%{transform:translate(90px,50px)} 50%{transform:translate(50px,90px)} 75%{transform:translate(10px,50px)} 100%{transform:translate(50px,0)} }
+  @keyframes fade-in { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+  .fade-in { animation: fade-in 0.3s ease; }
+</style>
+</head>
+<body>
+
+<div class="header" id="mainHeader">
+  <button class="header-back" id="backBtn" onclick="goBack()">←</button>
+  <span class="ball-icon">🏀</span>
+  <div>
+    <div class="header-title" id="headerTitle">농구 훈련 코치</div>
+    <div class="header-sub" id="headerSub">혼자도 강해질 수 있다</div>
+  </div>
+</div>
+
+<nav class="bottom-nav" id="bottomNav">
+  <button class="nav-item active" onclick="showScreen('home',this)">
+    <span class="nav-icon">🏠</span><span class="nav-label">홈</span>
+  </button>
+  <button class="nav-item" onclick="showScreen('programs',this)">
+    <span class="nav-icon">📋</span><span class="nav-label">프로그램</span>
+  </button>
+  <button class="nav-item" onclick="showScreen('records',this)">
+    <span class="nav-icon">📊</span><span class="nav-label">기록</span>
+  </button>
+</nav>
+
+<!-- 홈 -->
+<div class="screen active fade-in" id="screen-home">
+  <div class="greeting">
+    <h2>오늘도<br><span>코트에서</span> 성장하자! 💪</h2>
+    <p id="todayDate"></p>
+  </div>
+  <div class="section-label">오늘의 추천 훈련</div>
+  <div class="today-card" id="todayCard">
+    <div class="today-badge">TODAY</div>
+    <div class="today-title" id="todayRoutineTitle">기초 드리블 마스터</div>
+    <div class="today-meta" id="todayMeta">
+      <span>⏱ 30분</span><span>⚡ 드리블</span><span>⭐ 초급</span>
+    </div>
+  </div>
+  <div class="section-label">카테고리</div>
+  <div class="category-grid">
+    <div class="cat-card" data-cat="dribble" onclick="showCategory('dribble')">
+      <div class="cat-icon">⚡</div>
+      <div class="cat-name">드리블</div>
+      <div class="cat-desc">볼핸들링과 컨트롤</div>
+      <div class="cat-count">루틴 5개</div>
+    </div>
+    <div class="cat-card" data-cat="shooting" onclick="showCategory('shooting')">
+      <div class="cat-icon">🎯</div>
+      <div class="cat-name">슈팅</div>
+      <div class="cat-desc">정확도와 폼 교정</div>
+      <div class="cat-count">루틴 4개</div>
+    </div>
+    <div class="cat-card" data-cat="footwork" onclick="showCategory('footwork')">
+      <div class="cat-icon">👟</div>
+      <div class="cat-name">풋워크</div>
+      <div class="cat-desc">스텝과 민첩성</div>
+      <div class="cat-count">루틴 3개</div>
+    </div>
+    <div class="cat-card" data-cat="full" onclick="showCategory('full')">
+      <div class="cat-icon">🔥</div>
+      <div class="cat-name">종합</div>
+      <div class="cat-desc">실전형 풀 루틴</div>
+      <div class="cat-count">루틴 3개</div>
+    </div>
+  </div>
+  <div class="section-label">이번 주 완료</div>
+  <div id="weeklyRecords">
+    <div class="record-empty">
+      <div class="icon">🌱</div>
+      <p>아직 완료한 훈련이 없어요<br>오늘 첫 훈련을 시작해보세요!</p>
+    </div>
+  </div>
+</div>
+
+<!-- 프로그램 -->
+<div class="screen" id="screen-programs">
+  <div class="section-label">전체 프로그램</div>
+  <div class="level-tabs" id="levelTabs">
+    <div class="level-tab active" onclick="filterLevel('all',this)">전체</div>
+    <div class="level-tab" onclick="filterLevel('beginner',this)">초급 ⭐</div>
+    <div class="level-tab" onclick="filterLevel('intermediate',this)">중급 ⭐⭐</div>
+    <div class="level-tab" onclick="filterLevel('advanced',this)">고급 ⭐⭐⭐</div>
+  </div>
+  <div id="routineList"></div>
+</div>
+
+<!-- 카테고리 -->
+<div class="screen" id="screen-category">
+  <div class="section-label" id="categoryLabel">드리블</div>
+  <div class="level-tabs" id="catLevelTabs">
+    <div class="level-tab active" onclick="filterCatLevel('all',this)">전체</div>
+    <div class="level-tab" onclick="filterCatLevel('beginner',this)">초급 ⭐</div>
+    <div class="level-tab" onclick="filterCatLevel('intermediate',this)">중급 ⭐⭐</div>
+    <div class="level-tab" onclick="filterCatLevel('advanced',this)">고급 ⭐⭐⭐</div>
+  </div>
+  <div id="catRoutineList"></div>
+</div>
+
+<!-- 훈련 -->
+<div class="screen" id="screen-training">
+  <div class="training-progress">
+    <div class="progress-label">
+      <span id="progressText">드릴 1 / 4</span>
+      <span id="progressPct">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    </div>
+  </div>
+  <div class="drill-list-mini" id="drillDots"></div>
+  <div class="drill-card fade-in" id="drillCard">
+    <div class="drill-number" id="drillNumber">DRILL 01</div>
+    <div class="drill-name" id="drillName">-</div>
+
+    <!-- 시각 영역: SVG 애니메이션 -->
+    <div class="drill-visual" id="drillVisual"></div>
+
+    <!-- 유튜브 버튼 -->
+    <a class="youtube-btn" id="youtubeBtn" href="#" target="_blank">
+      <span class="youtube-icon">▶</span> 유튜브에서 동작 보기
+    </a>
+
+    <div class="drill-desc" id="drillDesc">-</div>
+    <div class="drill-tip" id="drillTip">-</div>
+    <div class="drill-meta-row">
+      <div class="drill-meta-item">
+        <div class="val" id="drillSets">-</div><div class="lbl">세트</div>
+      </div>
+      <div class="drill-meta-item">
+        <div class="val" id="drillReps">-</div><div class="lbl">횟수/시간</div>
+      </div>
+      <div class="drill-meta-item">
+        <div class="val" id="drillRest">-</div><div class="lbl">휴식</div>
+      </div>
+    </div>
+    <div class="timer-section" id="timerSection">
+      <div class="timer-display" id="timerDisplay">00:00</div>
+      <div class="timer-controls">
+        <button class="timer-btn start" id="timerStartBtn" onclick="toggleTimer()">▶ 시작</button>
+        <button class="timer-btn reset" onclick="resetTimer()">↺ 리셋</button>
+      </div>
+    </div>
+    <button class="complete-btn" id="completeDrillBtn" onclick="completeDrill()">✅ 드릴 완료 → 다음</button>
+  </div>
+</div>
+
+<!-- 완료 -->
+<div class="screen" id="screen-finish">
+  <div class="finish-screen">
+    <div class="finish-emoji">🏆</div>
+    <div class="finish-title"><span>훈련 완료!</span><br>잘했어!</div>
+    <div class="finish-sub" id="finishSub">오늘도 한 걸음 성장했다 💪</div>
+    <div class="finish-stats">
+      <div class="stat-box"><div class="stat-val" id="finishDrills">4</div><div class="stat-lbl">완료 드릴</div></div>
+      <div class="stat-box"><div class="stat-val" id="finishTime">30분</div><div class="stat-lbl">훈련 시간</div></div>
+    </div>
+    <div class="finish-btns">
+      <button class="btn-primary" onclick="goHome()">🏠 홈으로</button>
+      <button class="btn-secondary" onclick="showScreen('programs', document.querySelectorAll('.nav-item')[1])">다른 루틴 보기</button>
+    </div>
+  </div>
+</div>
+
+<!-- 기록 -->
+<div class="screen" id="screen-records">
+  <div class="section-label">나의 훈련 기록</div>
+  <div id="allRecords"></div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// SVG 애니메이션 라이브러리
+// ══════════════════════════════════════════
+const VISUALS = {
+
+  // 코트 배경 (재사용)
+  court: (w=320, h=160) => `
+    <rect width="${w}" height="${h}" fill="#1a3a1a"/>
+    <rect x="10" y="10" width="${w-20}" height="${h-20}" rx="4" fill="none" stroke="#2a6a2a" stroke-width="1.5"/>
+    <line x1="${w/2}" y1="10" x2="${w/2}" y2="${h-10}" stroke="#2a6a2a" stroke-width="1"/>
+    <circle cx="${w/2}" cy="${h/2}" r="28" fill="none" stroke="#2a6a2a" stroke-width="1"/>`,
+
+  // 골대
+  hoop: (x=280, y=30) => `
+    <rect x="${x}" y="${y}" width="18" height="2" fill="#888" rx="1"/>
+    <ellipse cx="${x+9}" cy="${y+2}" rx="9" ry="4" fill="none" stroke="#FF6B1A" stroke-width="2"/>
+    <line x1="${x+4}" y1="${y+6}" x2="${x+6}" y2="${y+22}" stroke="#ccc" stroke-width="1" opacity="0.5"/>
+    <line x1="${x+14}" y1="${y+6}" x2="${x+12}" y2="${y+22}" stroke="#ccc" stroke-width="1" opacity="0.5"/>`,
+
+  // 선수
+  player: (cx=50, cy=100, color='#FF6B1A') => `
+    <circle cx="${cx}" cy="${cy-22}" r="8" fill="${color}"/>
+    <line x1="${cx}" y1="${cy-14}" x2="${cx}" y2="${cy-2}" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
+    <line x1="${cx-10}" y1="${cy-8}" x2="${cx+10}" y2="${cy-8}" stroke="${color}" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="${cx}" y1="${cy-2}" x2="${cx-8}" y2="${cy+14}" stroke="${color}" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="${cx}" y1="${cy-2}" x2="${cx+8}" y2="${cy+14}" stroke="${color}" stroke-width="2.5" stroke-linecap="round"/>`,
+
+  // 공
+  ball: (cx=50, cy=120, r=7, color='#FF6B1A') => `
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="${color}"/>
+    <line x1="${cx-r}" y1="${cy}" x2="${cx+r}" y2="${cy}" stroke="#000" stroke-width="0.8" opacity="0.4"/>
+    <path d="M${cx} ${cy-r} Q${cx+r*0.7} ${cy} ${cx} ${cy+r}" fill="none" stroke="#000" stroke-width="0.8" opacity="0.4"/>`,
+
+  // 화살표
+  arrow: (x1,y1,x2,y2,color='#FFD60A',dash=false) => {
+    const dx=x2-x1, dy=y2-y1, len=Math.sqrt(dx*dx+dy*dy);
+    const ux=dx/len, uy=dy/len;
+    const hx=x2-ux*10, hy=y2-uy*10;
+    const lx=hx-uy*5, ly=hy+ux*5;
+    const rx=hx+uy*5, ry=hy-ux*5;
+    return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="2"
+      ${dash?'stroke-dasharray="6,3"':''} stroke-linecap="round"/>
+      <polygon points="${x2},${y2} ${lx},${ly} ${rx},${ry}" fill="${color}"/>`;
+  }
+};
+
+// 드릴별 SVG 빌더
+function buildDrillSVG(drillKey) {
+  const svg = (body, w=320, h=160) =>
+    `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" style="background:#111">${body}</svg>`;
+
+  const builders = {
+
+    // 드리블 ─────────────────────────────
+    '정지 볼 두드리기': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.player(160,110)}
+      <g style="animation:bounce-ball 0.6s ease-in-out infinite">
+        ${VISUALS.ball(160,130)}
+      </g>
+      <text x="160" y="155" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">제자리 드리블</text>
+    `),
+
+    '낮은 드리블': () => svg(`
+      ${VISUALS.court(320,160)}
+      <g style="transform:translateY(15px)">
+        ${VISUALS.player(160,95)}
+      </g>
+      <g style="animation:bounce-ball 0.4s ease-in-out infinite">
+        ${VISUALS.ball(160,138,5)}
+      </g>
+      ${VISUALS.arrow(160,138,160,148,'#FFD60A')}
+      <text x="160" y="158" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">낮은 자세 유지</text>
+    `),
+
+    '크로스오버 기초': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.player(160,100)}
+      <g style="animation:slide-lr 0.8s ease-in-out infinite alternate">
+        ${VISUALS.ball(140,128)}
+      </g>
+      ${VISUALS.arrow(130,132,190,132,'#FFD60A')}
+      ${VISUALS.arrow(190,136,130,136,'#4DA6FF')}
+      <text x="160" y="155" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">R → L 크로스오버</text>
+    `),
+
+    '비하인드 더 백': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.player(160,100)}
+      <g style="animation:behind-back 1s ease-in-out infinite alternate">
+        ${VISUALS.ball(140,118,6,'#FF6B1A')}
+      </g>
+      <path d="M148 120 Q160 135 172 120" fill="none" stroke="#FFD60A" stroke-width="1.5" stroke-dasharray="4,2"/>
+      <text x="160" y="155" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">등 뒤로 이동</text>
+    `),
+
+    '레그 스루': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.player(160,100)}
+      <line x1="148" y1="112" x2="172" y2="112" stroke="#555" stroke-width="2"/>
+      <g style="animation:legthru 0.9s ease-in-out infinite alternate">
+        ${VISUALS.ball(148,118,6)}
+      </g>
+      <path d="M148 118 Q160 125 172 118" fill="none" stroke="#FFD60A" stroke-width="1.5" stroke-dasharray="4,2"/>
+      <text x="160" y="155" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">다리 사이 통과</text>
+    `),
+
+    '스파이더 드리블': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.player(160,95)}
+      <circle cx="148" cy="115" r="5" fill="#FF6B1A" style="animation:pulse 0.4s 0s ease-in-out infinite alternate"/>
+      <circle cx="172" cy="115" r="5" fill="#FF6B1A" style="animation:pulse 0.4s 0.1s ease-in-out infinite alternate"/>
+      <circle cx="148" cy="128" r="5" fill="#FFD60A" style="animation:pulse 0.4s 0.2s ease-in-out infinite alternate"/>
+      <circle cx="172" cy="128" r="5" fill="#FFD60A" style="animation:pulse 0.4s 0.3s ease-in-out infinite alternate"/>
+      <text x="160" y="148" fill="#888" font-size="9" text-anchor="middle" font-family="sans-serif">앞→뒤 순서</text>
+      <text x="160" y="158" fill="#888" font-size="9" text-anchor="middle" font-family="sans-serif">오른 앞 / 왼 앞 / 오른 뒤 / 왼 뒤</text>
+    `),
+
+    '직선 드리블 왕복': () => svg(`
+      ${VISUALS.court(320,160)}
+      <g style="animation:slide-lr 1.2s linear infinite alternate">
+        ${VISUALS.player(40,100)}
+        ${VISUALS.ball(40,128)}
+      </g>
+      ${VISUALS.arrow(30,75,280,75,'#FFD60A')}
+      ${VISUALS.arrow(280,85,30,85,'#4DA6FF')}
+      <text x="160" y="155" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">왕복 드리블</text>
+    `),
+
+    '지그재그 드리블': () => svg(`
+      ${VISUALS.court(320,160)}
+      <path d="M30 130 L80 70 L130 130 L180 70 L230 130 L280 70" fill="none" stroke="#FFD60A" stroke-width="1.5" stroke-dasharray="5,3"/>
+      <g style="animation:zigzag 2s linear infinite">
+        ${VISUALS.player(30,115)}
+        ${VISUALS.ball(30,140,5)}
+      </g>
+      <text x="160" y="158" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">방향 전환 드리블</text>
+    `),
+
+    '속도 변환 드리블': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.player(160,100)}
+      <text x="90" y="80" fill="#4DA6FF" font-size="11" text-anchor="middle" font-family="sans-serif" font-weight="bold">느리게</text>
+      <text x="230" y="80" fill="#FF6B1A" font-size="11" text-anchor="middle" font-family="sans-serif" font-weight="bold">빠르게!</text>
+      ${VISUALS.arrow(100,85,140,95,'#4DA6FF')}
+      ${VISUALS.arrow(180,95,220,85,'#FF6B1A')}
+      <g style="animation:bounce-ball 0.7s ease-in-out infinite">
+        ${VISUALS.ball(160,128,6)}
+      </g>
+    `),
+
+    '원 볼 풀 콤보': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.player(160,100)}
+      <text x="80" y="68" fill="#FF6B1A" font-size="9" text-anchor="middle" font-family="sans-serif">크로스오버</text>
+      <text x="160" y="58" fill="#FFD60A" font-size="9" text-anchor="middle" font-family="sans-serif">비하인드</text>
+      <text x="240" y="68" fill="#3DDC84" font-size="9" text-anchor="middle" font-family="sans-serif">레그스루</text>
+      ${VISUALS.arrow(80,72,130,85,'#FF6B1A')}
+      ${VISUALS.arrow(160,62,160,82,'#FFD60A')}
+      ${VISUALS.arrow(240,72,190,85,'#3DDC84')}
+      <g style="animation:bounce-ball 0.5s ease-in-out infinite">
+        ${VISUALS.ball(160,128)}
+      </g>
+    `),
+
+    '원핸드 패스 드리블': () => svg(`
+      ${VISUALS.court(320,160)}
+      <g style="animation:slide-lr 1.5s linear infinite alternate">
+        ${VISUALS.player(40,100)}
+        ${VISUALS.ball(50,130,6,'#FF6B1A')}
+      </g>
+      <text x="160" y="80" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">한 손으로만!</text>
+      ${VISUALS.arrow(30,90,280,90,'#FFD60A',true)}
+    `),
+
+    '스텝백 드리블': () => svg(`
+      ${VISUALS.court(320,160)}
+      <g style="animation:stepback 1.2s ease-in-out infinite">
+        ${VISUALS.player(80,100)}
+        ${VISUALS.ball(80,128,6)}
+      </g>
+      ${VISUALS.arrow(200,100,140,100,'#FFD60A')}
+      <text x="230" y="100" fill="#888" font-size="9" font-family="sans-serif">수비</text>
+      <circle cx="240" cy="100" r="12" fill="#4DA6FF" opacity="0.4"/>
+      <text x="160" y="155" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">뒤로 물러서며 공간 확보</text>
+    `),
+
+    '헤지테이션 드리블': () => svg(`
+      ${VISUALS.court(320,160)}
+      <g style="animation:slide-lr 1.8s ease-in-out infinite alternate">
+        ${VISUALS.player(60,100)}
+        ${VISUALS.ball(60,128,6)}
+      </g>
+      <text x="130" y="75" fill="#FFD60A" font-size="10" text-anchor="middle" font-family="sans-serif">잠깐 멈춤!</text>
+      <text x="230" y="75" fill="#FF6B1A" font-size="10" text-anchor="middle" font-family="sans-serif">폭발 가속!</text>
+    `),
+
+    '고강도 풀 코트 드리블': () => svg(`
+      ${VISUALS.court(320,160)}
+      <g style="animation:slide-lr 0.9s linear infinite alternate">
+        ${VISUALS.player(40,100)}
+        ${VISUALS.ball(40,128,6)}
+      </g>
+      ${VISUALS.arrow(25,75,295,75,'#FF6B1A')}
+      <text x="160" y="90" fill="#FF6B1A" font-size="11" text-anchor="middle" font-family="sans-serif" font-weight="bold">최대 속도!</text>
+    `),
+
+    '투 볼 드리블': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.player(160,100)}
+      <g style="animation:bounce-ball 0.5s ease-in-out infinite">
+        ${VISUALS.ball(148,128,6,'#FF6B1A')}
+      </g>
+      <g style="animation:bounce-ball 0.5s 0.25s ease-in-out infinite">
+        ${VISUALS.ball(172,128,6,'#FFD60A')}
+      </g>
+      <text x="160" y="155" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">양손 동시 드리블</text>
+    `),
+
+    '아이즈업 콘 드리블': () => svg(`
+      ${VISUALS.court(320,160)}
+      <polygon points="200,120 208,140 192,140" fill="#FFD60A" opacity="0.8"/>
+      <circle cx="200" cy="140" r="4" fill="#888"/>
+      <g style="animation:slide-lr 1.5s ease-in-out infinite alternate">
+        ${VISUALS.player(80,100)}
+        ${VISUALS.ball(80,128,6)}
+      </g>
+      <text x="160" y="155" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">공 안 보고 콘 집중!</text>
+    `),
+
+    '원 레그 드리블': () => svg(`
+      ${VISUALS.court(320,160)}
+      <circle cx="160" cy="78" r="8" fill="#FF6B1A"/>
+      <line x1="160" y1="86" x2="160" y2="100" stroke="#FF6B1A" stroke-width="3" stroke-linecap="round"/>
+      <line x1="150" y1="92" x2="170" y2="92" stroke="#FF6B1A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="160" y1="100" x2="152" y2="118" stroke="#FF6B1A" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="160" y="132" fill="#888" font-size="9" text-anchor="middle" font-family="sans-serif">한 발 들기</text>
+      <g style="animation:bounce-ball 0.6s ease-in-out infinite">
+        ${VISUALS.ball(160,140,6)}
+      </g>
+    `),
+
+    '고강도 콤비네이션': () => svg(`
+      ${VISUALS.court(320,160)}
+      <path d="M30 130 L80 120 Q110 115 130 100 L160 110 Q185 125 210 100 L260 115 L290 130" fill="none" stroke="#FFD60A" stroke-width="2" stroke-dasharray="6,3" style="animation:dash-move 1s linear infinite"/>
+      <g style="animation:zigzag 3s linear infinite">
+        ${VISUALS.player(30,115)}
+      </g>
+      <text x="160" y="155" fill="#FF6B1A" font-size="10" text-anchor="middle" font-family="sans-serif" font-weight="bold">실전 콤비네이션!</text>
+    `),
+
+    // 슈팅 ─────────────────────────────
+    '미니 폼 슈팅': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.hoop(240,20)}
+      ${VISUALS.player(200,110)}
+      <g style="animation:shot-arc 1.5s ease-in-out infinite">
+        ${VISUALS.ball(200,105,6,'#FF6B1A')}
+      </g>
+      <text x="160" y="155" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">골대 1~2m 근거리 폼 연습</text>
+    `),
+
+    '레이업 기초': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.hoop(270,25)}
+      <g style="animation:layup-step 1.8s ease-in-out infinite">
+        ${VISUALS.player(160,100)}
+        ${VISUALS.ball(170,95,6)}
+      </g>
+      ${VISUALS.arrow(80,120,240,70,'#FFD60A',true)}
+      <text x="160" y="155" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">오른발→왼발→점프→올리기</text>
+    `),
+
+    '자유투 연습': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.hoop(258,20)}
+      <rect x="230" y="20" width="50" height="70" rx="2" fill="none" stroke="#2a6a2a" stroke-width="1"/>
+      ${VISUALS.player(160,100)}
+      <g style="animation:free-throw 2s ease-in-out infinite">
+        ${VISUALS.ball(160,95,6)}
+      </g>
+      <text x="160" y="85" fill="#FFD60A" font-size="9" text-anchor="middle" font-family="sans-serif">공 튕기기3→심호흡→슈팅</text>
+    `),
+
+    '뱅크슛 연습': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.hoop(258,20)}
+      <rect x="248" y="10" width="30" height="25" rx="2" fill="none" stroke="#888" stroke-width="1.5"/>
+      <rect x="253" y="14" width="10" height="8" rx="1" fill="none" stroke="#FFD60A" stroke-width="1"/>
+      ${VISUALS.player(190,105)}
+      <path d="M190 100 Q248 30 262 22" fill="none" stroke="#FF6B1A" stroke-width="1.5" stroke-dasharray="5,3"/>
+      <text x="160" y="155" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">백보드 사각형 상단 목표</text>
+    `),
+
+    '스팟 슈팅': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.hoop(258,20)}
+      <circle cx="200" cy="110" r="5" fill="#FFD60A" opacity="0.8"/>
+      <circle cx="230" cy="90" r="5" fill="#FFD60A" opacity="0.8"/>
+      <circle cx="260" cy="85" r="5" fill="#FF6B1A" opacity="0.8"/>
+      <circle cx="230" cy="110" r="5" fill="#FFD60A" opacity="0.8"/>
+      <circle cx="200" cy="90" r="5" fill="#FFD60A" opacity="0.8"/>
+      <g style="animation:spot-move 4s linear infinite">
+        ${VISUALS.player(200,110)}
+      </g>
+      <text x="160" y="155" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">5스팟 순서대로</text>
+    `),
+
+    '원 스텝 풀업': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.hoop(258,20)}
+      ${VISUALS.player(200,110)}
+      ${VISUALS.arrow(140,120,195,108,'#FFD60A')}
+      <text x="155" y="115" fill="#FFD60A" font-size="9" font-family="sans-serif">드리블 후</text>
+      <text x="195" y="95" fill="#FF6B1A" font-size="9" text-anchor="middle" font-family="sans-serif">점프!</text>
+    `),
+
+    '미드레인지 점프슛': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.hoop(258,20)}
+      <circle cx="220" cy="90" r="4" fill="#4DA6FF" opacity="0.6"/>
+      <circle cx="220" cy="130" r="4" fill="#4DA6FF" opacity="0.6"/>
+      <text x="215" y="85" fill="#4DA6FF" font-size="8" text-anchor="middle" font-family="sans-serif">엘보우</text>
+      <g style="animation:shot-arc 2s ease-in-out infinite">
+        ${VISUALS.ball(220,100,6)}
+      </g>
+      ${VISUALS.player(220,115)}
+      <text x="160" y="155" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">3~4m 거리 점프슛</text>
+    `),
+
+    '마무리 연속 레이업': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.hoop(258,20)}
+      ${VISUALS.arrow(60,120,240,70,'#FF6B1A',true)}
+      ${VISUALS.arrow(240,75,60,125,'#4DA6FF',true)}
+      <text x="160" y="155" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">좌우 연속 레이업</text>
+    `),
+
+    '무빙 슈팅': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.hoop(258,20)}
+      <path d="M60 130 L160 100" fill="none" stroke="#4DA6FF" stroke-width="2"/>
+      <text x="100" y="92" fill="#FFD60A" font-size="10" text-anchor="middle" font-family="sans-serif">멈추고 슛!</text>
+      <g style="animation:layup-step 2s ease-in-out infinite">
+        ${VISUALS.player(160,105)}
+        ${VISUALS.ball(170,95,6)}
+      </g>
+    `),
+
+    '풀업 점프슛': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.hoop(258,20)}
+      ${VISUALS.arrow(60,115,180,110,'#4DA6FF')}
+      <text x="130" y="105" fill="#FFD60A" font-size="9" text-anchor="middle" font-family="sans-serif">급정지!</text>
+      <g style="animation:shot-arc 2s ease-in-out infinite">
+        ${VISUALS.ball(180,100,6)}
+      </g>
+      ${VISUALS.player(180,115)}
+    `),
+
+    '클락 슈팅': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.hoop(258,20)}
+      <circle cx="260" cy="80" r="45" fill="none" stroke="#333" stroke-width="1.5"/>
+      <circle cx="260" cy="38" r="4" fill="#FF6B1A"/>
+      <circle cx="302" cy="80" r="4" fill="#FFD60A"/>
+      <circle cx="260" cy="122" r="4" fill="#3DDC84"/>
+      <circle cx="218" cy="80" r="4" fill="#4DA6FF"/>
+      <g style="animation:clock-move 4s linear infinite">
+        ${VISUALS.player(260,38)}
+      </g>
+      <text x="160" y="155" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">시계 방향 순서</text>
+    `),
+
+    '3점 스팟 슈팅': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.hoop(258,20)}
+      <path d="M220 145 Q260 55 300 145" fill="none" stroke="#B86EFF" stroke-width="2" stroke-dasharray="5,3"/>
+      <circle cx="220" cy="145" r="5" fill="#B86EFF" opacity="0.8"/>
+      <circle cx="240" cy="100" r="5" fill="#B86EFF" opacity="0.8"/>
+      <circle cx="260" cy="85" r="5" fill="#FF6B1A" opacity="0.9"/>
+      <circle cx="280" cy="100" r="5" fill="#B86EFF" opacity="0.8"/>
+      <circle cx="300" cy="145" r="5" fill="#B86EFF" opacity="0.8"/>
+      <text x="160" y="155" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">3점 라인 5포인트</text>
+    `),
+
+    '티어드롭 레이업': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.hoop(258,20)}
+      ${VISUALS.arrow(150,120,220,60,'#FF6B1A')}
+      <path d="M220 60 Q250 25 265 30" fill="none" stroke="#FFD60A" stroke-width="2"/>
+      ${VISUALS.player(180,105)}
+      <text x="160" y="155" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">높은 포물선으로 부드럽게</text>
+    `),
+
+    '드리블-인투-3점': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.hoop(258,20)}
+      <path d="M220 145 Q260 55 300 145" fill="none" stroke="#B86EFF" stroke-width="2" stroke-dasharray="5,3"/>
+      ${VISUALS.arrow(140,130,220,140,'#FFD60A')}
+      <g style="animation:shot-arc 2.5s ease-in-out infinite">
+        ${VISUALS.ball(220,135,6)}
+      </g>
+      <text x="160" y="155" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">3점 라인 밖에서 슛!</text>
+    `),
+
+    '스크린 후 캐치 슛': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.hoop(258,20)}
+      <path d="M180 135 L220 100" fill="none" stroke="#FFD60A" stroke-width="2"/>
+      ${VISUALS.player(220,100)}
+      <text x="200" y="93" fill="#FFD60A" font-size="9" text-anchor="middle" font-family="sans-serif">컷!</text>
+      <g style="animation:shot-arc 2s ease-in-out infinite">
+        ${VISUALS.ball(220,95,6)}
+      </g>
+      <text x="160" y="155" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">컷 후 바로 릴리즈</text>
+    `),
+
+    // 풋워크 ─────────────────────────────
+    '측면 슬라이드 스텝': () => svg(`
+      ${VISUALS.court(320,160)}
+      <g style="animation:slide-def 1.2s ease-in-out infinite alternate">
+        ${VISUALS.player(80,105,'#4DA6FF')}
+      </g>
+      ${VISUALS.arrow(60,140,260,140,'#4DA6FF')}
+      ${VISUALS.arrow(260,148,60,148,'#4DA6FF')}
+      <text x="160" y="158" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">발 교차 금지! 슬라이드</text>
+    `),
+
+    '점프 스톱': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.arrow(60,100,200,100,'#FFD60A')}
+      <text x="220" y="100" fill="#FF6B1A" font-size="11" font-family="sans-serif" font-weight="bold">STOP!</text>
+      <g style="animation:pulse 1s ease-in-out infinite">
+        ${VISUALS.player(200,110)}
+      </g>
+      <text x="160" y="155" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">양발 동시 착지!</text>
+    `),
+
+    '피벗 연습': () => svg(`
+      ${VISUALS.court(320,160)}
+      <circle cx="160" cy="115" r="25" fill="none" stroke="#FFD60A" stroke-width="1.5" stroke-dasharray="5,3" style="animation:pivot-rot 2s linear infinite"/>
+      ${VISUALS.player(160,100)}
+      <circle cx="160" cy="124" r="4" fill="#FF6B1A"/>
+      <text x="160" y="150" fill="#FF6B1A" font-size="9" text-anchor="middle" font-family="sans-serif">피벗 발 고정!</text>
+      <text x="160" y="158" fill="#888" font-size="9" text-anchor="middle" font-family="sans-serif">반대 발로 360도 회전</text>
+    `),
+
+    '박스 스텝 아웃': () => svg(`
+      ${VISUALS.court(320,160)}
+      <rect x="130" y="80" width="60" height="60" fill="none" stroke="#FFD60A" stroke-width="1.5" stroke-dasharray="4,3"/>
+      ${VISUALS.arrow(160,80,160,65,'#FF6B1A')}
+      ${VISUALS.arrow(190,110,210,110,'#FF6B1A')}
+      ${VISUALS.arrow(160,140,160,155,'#FF6B1A')}
+      ${VISUALS.arrow(130,110,110,110,'#FF6B1A')}
+      <g style="animation:pulse 0.5s ease-in-out infinite">
+        ${VISUALS.player(160,100)}
+      </g>
+      <text x="160" y="158" fill="#888" font-size="9" text-anchor="middle" font-family="sans-serif">4방향 빠른 스텝</text>
+    `),
+
+    '유로스텝': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.hoop(258,20)}
+      <g style="animation:euroStep 2s ease-in-out infinite">
+        ${VISUALS.player(80,110)}
+        ${VISUALS.ball(90,130,6)}
+      </g>
+      ${VISUALS.arrow(80,130,150,115,'#FFD60A')}
+      ${VISUALS.arrow(150,118,220,130,'#FFD60A')}
+      <text x="160" y="155" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">좌→우 스텝으로 수비 제치기</text>
+    `),
+
+    '스텝백 점프슛 스텝': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.hoop(258,20)}
+      <g style="animation:stepback 1.5s ease-in-out infinite">
+        ${VISUALS.player(160,100)}
+      </g>
+      ${VISUALS.arrow(220,100,160,100,'#FFD60A')}
+      <text x="185" y="93" fill="#FFD60A" font-size="9" font-family="sans-serif">←뒤로 2보</text>
+      <text x="160" y="155" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">뒤로 물러서며 공간 확보</text>
+    `),
+
+    '지그재그 컷': () => svg(`
+      ${VISUALS.court(320,160)}
+      <path d="M60 130 L120 80 L180 130 L240 80" fill="none" stroke="#3DDC84" stroke-width="2" stroke-dasharray="6,3"/>
+      <text x="90" y="72" fill="#3DDC84" font-size="9" text-anchor="middle" font-family="sans-serif">V컷</text>
+      <text x="210" y="72" fill="#3DDC84" font-size="9" text-anchor="middle" font-family="sans-serif">L컷</text>
+      <g style="animation:zigzag 2s linear infinite">
+        ${VISUALS.player(60,115)}
+      </g>
+      <text x="160" y="155" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">날카로운 방향 전환</text>
+    `),
+
+    '글라이드 스텝': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.player(160,100)}
+      ${VISUALS.arrow(160,100,120,90,'#4DA6FF')}
+      <text x="100" y="85" fill="#4DA6FF" font-size="9" text-anchor="middle" font-family="sans-serif">페인트</text>
+      ${VISUALS.arrow(165,103,220,95,'#FF6B1A')}
+      <text x="235" y="90" fill="#FF6B1A" font-size="9" font-family="sans-serif">실제!</text>
+      <text x="160" y="155" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">페인트 후 반대 방향 폭발</text>
+    `),
+
+    '래더 드릴 (가상)': () => svg(`
+      ${VISUALS.court(320,160)}
+      <rect x="60" y="50" width="40" height="100" rx="3" fill="none" stroke="#FFD60A" stroke-width="1.5"/>
+      <line x1="60" y1="70" x2="100" y2="70" stroke="#FFD60A" stroke-width="1"/>
+      <line x1="60" y1="90" x2="100" y2="90" stroke="#FFD60A" stroke-width="1"/>
+      <line x1="60" y1="110" x2="100" y2="110" stroke="#FFD60A" stroke-width="1"/>
+      <line x1="60" y1="130" x2="100" y2="130" stroke="#FFD60A" stroke-width="1"/>
+      <g style="animation:slide-lr 0.6s ease-in-out infinite alternate">
+        <circle cx="70" cy="60" r="5" fill="#FF6B1A" style="animation:pulse 0.3s ease-in-out infinite"/>
+      </g>
+      <text x="200" y="100" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">빠른 발놀림!</text>
+      <text x="160" y="155" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">1-1, 2-2, 인-아웃 패턴</text>
+    `),
+
+    '폭발적 첫 스텝': () => svg(`
+      ${VISUALS.court(320,160)}
+      <g style="animation:pulse 1s ease-in-out infinite">
+        ${VISUALS.player(80,105)}
+      </g>
+      ${VISUALS.arrow(95,105,250,105,'#FF6B1A')}
+      <text x="200" y="95" fill="#FF6B1A" font-size="12" text-anchor="middle" font-family="sans-serif" font-weight="bold">폭발!</text>
+      <text x="160" y="155" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">첫 스텝 5m 최대 가속</text>
+    `),
+
+    '풋워크 콤비네이션': () => svg(`
+      ${VISUALS.court(320,160)}
+      <path d="M40 130 Q80 110 120 115 Q150 120 170 100 Q190 80 220 110 L260 100" fill="none" stroke="#B86EFF" stroke-width="2" stroke-dasharray="6,3" style="animation:dash-move 1s linear infinite"/>
+      <text x="60" y="105" fill="#FFD60A" font-size="8" text-anchor="middle" font-family="sans-serif">유로</text>
+      <text x="140" y="108" fill="#FF6B1A" font-size="8" text-anchor="middle" font-family="sans-serif">스텝백</text>
+      <text x="200" y="98" fill="#3DDC84" font-size="8" text-anchor="middle" font-family="sans-serif">피벗</text>
+      <text x="260" y="95" fill="#4DA6FF" font-size="8" text-anchor="middle" font-family="sans-serif">컷</text>
+    `),
+
+    // 종합 ─────────────────────────────
+    '워밍업: 조깅 & 스트레칭': () => svg(`
+      ${VISUALS.court(320,160)}
+      <circle cx="160" cy="80" r="50" fill="none" stroke="#3DDC84" stroke-width="2" stroke-dasharray="8,4" style="animation:dash-move 2s linear infinite"/>
+      <g style="animation:slide-lr 2s linear infinite alternate">
+        ${VISUALS.player(120,80,'#3DDC84')}
+      </g>
+      <text x="160" y="150" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">코트 3바퀴 + 스트레칭</text>
+    `),
+
+    '드리블 기초 10분': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.player(160,100)}
+      <g style="animation:bounce-ball 0.5s ease-in-out infinite">
+        ${VISUALS.ball(160,128)}
+      </g>
+      <text x="160" y="70" fill="#FFD60A" font-size="10" text-anchor="middle" font-family="sans-serif">R 3분 → L 3분 → 크로스 4분</text>
+    `),
+
+    '레이업 집중 훈련': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.hoop(258,20)}
+      ${VISUALS.arrow(60,120,240,70,'#FF6B1A',true)}
+      ${VISUALS.arrow(240,80,60,130,'#4DA6FF',true)}
+      <text x="160" y="150" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">오른쪽10 → 왼쪽10 → 연속20</text>
+    `),
+
+    '자유투 마무리': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.hoop(258,20)}
+      <rect x="230" y="20" width="50" height="70" rx="2" fill="none" stroke="#2a6a2a" stroke-width="1"/>
+      ${VISUALS.player(160,100)}
+      <g style="animation:free-throw 2s ease-in-out infinite">
+        ${VISUALS.ball(160,95,6)}
+      </g>
+    `),
+
+    '워밍업 & 볼 감각': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.player(160,100)}
+      <g style="animation:pivot-rot 3s linear infinite">
+        ${VISUALS.ball(170,90,7,'#FF6B1A')}
+      </g>
+      <text x="160" y="150" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">공 감각 깨우기</text>
+    `),
+
+    '드리블 심화 + 풋워크 결합': () => svg(`
+      ${VISUALS.court(320,160)}
+      <path d="M60 130 L120 110 L180 120 L240 100" fill="none" stroke="#FFD60A" stroke-width="2" stroke-dasharray="6,3" style="animation:dash-move 1s linear infinite"/>
+      <text x="100" y="100" fill="#4DA6FF" font-size="9" text-anchor="middle" font-family="sans-serif">점프스톱</text>
+      <text x="200" y="90" fill="#3DDC84" font-size="9" text-anchor="middle" font-family="sans-serif">피벗</text>
+    `),
+
+    '5스팟 슈팅': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.hoop(258,20)}
+      <circle cx="200" cy="110" r="5" fill="#FFD60A"/>
+      <circle cx="225" cy="90" r="5" fill="#FFD60A"/>
+      <circle cx="260" cy="83" r="5" fill="#FF6B1A"/>
+      <circle cx="295" cy="90" r="5" fill="#FFD60A"/>
+      <circle cx="310" cy="110" r="5" fill="#FFD60A"/>
+      <text x="160" y="155" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">5위치 각 5개 = 25슈팅</text>
+    `),
+
+    '마무리 체력 드릴': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.hoop(258,20)}
+      <g style="animation:slide-lr 0.8s linear infinite alternate">
+        ${VISUALS.player(60,105,'#FF6B1A')}
+        ${VISUALS.ball(60,132,6)}
+      </g>
+      ${VISUALS.arrow(25,75,295,75,'#FF6B1A')}
+      <text x="160" y="90" fill="#FF6B1A" font-size="11" text-anchor="middle" font-family="sans-serif" font-weight="bold">지쳐도 포기 금지!</text>
+    `),
+
+    '인텐스 워밍업': () => svg(`
+      ${VISUALS.court(320,160)}
+      <circle cx="160" cy="80" r="50" fill="none" stroke="#FF6B1A" stroke-width="2" stroke-dasharray="8,4" style="animation:dash-move 1s linear infinite"/>
+      <g style="animation:slide-lr 1s linear infinite alternate">
+        ${VISUALS.player(120,80,'#FF6B1A')}
+      </g>
+      <text x="160" y="150" fill="#FF6B1A" font-size="10" text-anchor="middle" font-family="sans-serif" font-weight="bold">고강도 동적 워밍업!</text>
+    `),
+
+    '고강도 볼핸들링 서킷': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.player(160,100)}
+      <g style="animation:bounce-ball 0.35s ease-in-out infinite">
+        ${VISUALS.ball(148,128,6,'#FF6B1A')}
+      </g>
+      <g style="animation:bounce-ball 0.35s 0.17s ease-in-out infinite">
+        ${VISUALS.ball(172,128,6,'#FFD60A')}
+      </g>
+      <text x="160" y="155" fill="#FF6B1A" font-size="10" text-anchor="middle" font-family="sans-serif" font-weight="bold">투볼→스파이더→원레그→콤보</text>
+    `),
+
+    '실전형 무빙 슈팅': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.hoop(258,20)}
+      <path d="M60 130 L120 110 L200 90" fill="none" stroke="#FFD60A" stroke-width="2"/>
+      <g style="animation:shot-arc 2s ease-in-out infinite">
+        ${VISUALS.ball(200,85,6)}
+      </g>
+      ${VISUALS.player(200,100)}
+      <text x="160" y="155" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">이동하며 슈팅!</text>
+    `),
+
+    '5분 풀 인텐시티 피니시': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.hoop(258,20)}
+      ${VISUALS.arrow(40,120,240,75,'#FF6B1A')}
+      <text x="160" y="65" fill="#FF6B1A" font-size="14" text-anchor="middle" font-family="sans-serif" font-weight="bold">🔥 ALL OUT!</text>
+      <text x="160" y="150" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">마지막 5분 최고 강도</text>
+    `),
+
+    '파고-인 클락 슈팅': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.hoop(258,20)}
+      <circle cx="260" cy="80" r="45" fill="none" stroke="#333" stroke-width="1.5"/>
+      <g style="animation:clock-move 4s linear infinite">
+        ${VISUALS.player(260,38)}
+        ${VISUALS.ball(268,60,5)}
+      </g>
+      <text x="160" y="155" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">드라이브 후 피니시</text>
+    `),
+
+    '제자리 풀 드리블 루틴': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.player(160,100)}
+      <text x="110" y="75" fill="#FF6B1A" font-size="9" text-anchor="middle" font-family="sans-serif">R 10회</text>
+      <text x="160" y="68" fill="#FFD60A" font-size="9" text-anchor="middle" font-family="sans-serif">→ L 10회</text>
+      <text x="210" y="75" fill="#3DDC84" font-size="9" text-anchor="middle" font-family="sans-serif">→ 크로스 10회</text>
+      <g style="animation:bounce-ball 0.45s ease-in-out infinite">
+        ${VISUALS.ball(160,128)}
+      </g>
+    `),
+
+    '사이드 드리블 이동': () => svg(`
+      ${VISUALS.court(320,160)}
+      <g style="animation:slide-lr 1.5s ease-in-out infinite alternate">
+        ${VISUALS.player(80,100)}
+        ${VISUALS.ball(80,128,6)}
+      </g>
+      ${VISUALS.arrow(60,145,260,145,'#4DA6FF')}
+      <text x="160" y="158" fill="#888" font-size="10" text-anchor="middle" font-family="sans-serif">몸 정면 유지하며 옆으로</text>
+    `),
+
+    '원 볼 풀 콤보': () => svg(`
+      ${VISUALS.court(320,160)}
+      ${VISUALS.player(160,100)}
+      <text x="80" y="68" fill="#FF6B1A" font-size="9" text-anchor="middle" font-family="sans-serif">크로스</text>
+      <text x="160" y="58" fill="#FFD60A" font-size="9" text-anchor="middle" font-family="sans-serif">비하인드</text>
+      <text x="240" y="68" fill="#3DDC84" font-size="9" text-anchor="middle" font-family="sans-serif">레그스루</text>
+      ${VISUALS.arrow(80,72,130,85,'#FF6B1A')}
+      ${VISUALS.arrow(160,62,160,82,'#FFD60A')}
+      ${VISUALS.arrow(240,72,190,85,'#3DDC84')}
+      <g style="animation:bounce-ball 0.5s ease-in-out infinite">
+        ${VISUALS.ball(160,128)}
+      </g>
+    `),
+  };
+
+  const fn = builders[drillKey];
+  return fn ? fn() : svg(`
+    ${VISUALS.court(320,160)}
+    ${VISUALS.player(160,100)}
+    <g style="animation:bounce-ball 0.6s ease-in-out infinite">
+      ${VISUALS.ball(160,128)}
+    </g>
+  `);
+}
+
+// ══════════════════════════════════════════
+// 유튜브 검색 URL 매핑
+// ══════════════════════════════════════════
+const YOUTUBE = {
+  '정지 볼 두드리기': 'basketball stationary dribble drill beginner',
+  '낮은 드리블': 'basketball low dribble drill',
+  '크로스오버 기초': 'basketball crossover dribble beginner',
+  '비하인드 더 백': 'basketball behind the back dribble drill',
+  '레그 스루': 'basketball leg through dribble drill',
+  '스파이더 드리블': 'basketball spider dribble drill',
+  '직선 드리블 왕복': 'basketball full court dribble drill',
+  '지그재그 드리블': 'basketball zigzag cone dribble drill',
+  '속도 변환 드리블': 'basketball change of pace dribble',
+  '원 볼 풀 콤보': 'basketball ball handling combo drill',
+  '원핸드 패스 드리블': 'basketball one hand dribble drill',
+  '스텝백 드리블': 'basketball step back dribble move',
+  '헤지테이션 드리블': 'basketball hesitation move drill',
+  '고강도 풀 코트 드리블': 'basketball full court sprint dribble',
+  '투 볼 드리블': 'basketball two ball dribbling drill',
+  '아이즈업 콘 드리블': 'basketball eyes up cone dribble',
+  '원 레그 드리블': 'basketball one leg balance dribble',
+  '고강도 콤비네이션': 'basketball advanced ball handling combination',
+  '미니 폼 슈팅': 'basketball shooting form beginner BEEF',
+  '레이업 기초': 'basketball layup steps beginner',
+  '자유투 연습': 'basketball free throw routine practice',
+  '뱅크슛 연습': 'basketball bank shot practice',
+  '스팟 슈팅': 'basketball spot shooting drill',
+  '원 스텝 풀업': 'basketball one step pull up jumper',
+  '미드레인지 점프슛': 'basketball mid range jump shot elbow',
+  '마무리 연속 레이업': 'basketball continuous layup drill',
+  '무빙 슈팅': 'basketball catch and shoot off movement',
+  '스크린 후 캐치 슛': 'basketball catch and shoot off screen',
+  '풀업 점프슛': 'basketball pull up jump shot drill',
+  '클락 슈팅': 'basketball shooting around the arc clock',
+  '3점 스팟 슈팅': 'basketball three point spot shooting',
+  '드리블-인투-3점': 'basketball dribble pull up three pointer',
+  '티어드롭 레이업': 'basketball floater teardrop layup',
+  '파고-인 클락 슈팅': 'basketball drive and finish clock drill',
+  '측면 슬라이드 스텝': 'basketball defensive slide step drill',
+  '점프 스톱': 'basketball jump stop footwork',
+  '피벗 연습': 'basketball pivot footwork drill',
+  '박스 스텝 아웃': 'basketball box step out agility drill',
+  '유로스텝': 'basketball euro step move tutorial',
+  '스텝백 점프슛 스텝': 'basketball step back jump shot footwork',
+  '지그재그 컷': 'basketball v cut l cut drill',
+  '글라이드 스텝': 'basketball jab step fake drive',
+  '래더 드릴 (가상)': 'basketball agility ladder drill footwork',
+  '폭발적 첫 스텝': 'basketball explosive first step drill',
+  '풋워크 콤비네이션': 'basketball advanced footwork combination',
+  '워밍업: 조깅 & 스트레칭': 'basketball warmup dynamic stretch routine',
+  '드리블 기초 10분': 'basketball ball handling 10 minute workout',
+  '레이업 집중 훈련': 'basketball layup drill both hands',
+  '자유투 마무리': 'basketball free throw routine end of practice',
+  '워밍업 & 볼 감각': 'basketball ball handling warmup drill',
+  '드리블 심화 + 풋워크 결합': 'basketball dribble footwork combination',
+  '5스팟 슈팅': 'basketball 5 spot shooting drill',
+  '마무리 체력 드릴': 'basketball conditioning dribble sprint drill',
+  '인텐스 워밍업': 'basketball high intensity warmup',
+  '고강도 볼핸들링 서킷': 'basketball ball handling circuit advanced',
+  '실전형 무빙 슈팅': 'basketball game speed shooting drill',
+  '5분 풀 인텐시티 피니시': 'basketball full intensity conditioning finisher',
+  '제자리 풀 드리블 루틴': 'basketball stationary ball handling routine',
+  '사이드 드리블 이동': 'basketball lateral dribble drill',
+};
+
+function getYoutubeURL(drillName) {
+  const q = YOUTUBE[drillName] || ('basketball ' + drillName + ' drill');
+  return 'https://www.youtube.com/results?search_query=' + encodeURIComponent(q);
+}
+
+// ══════════════════════════════════════════
+// 데이터
+// ══════════════════════════════════════════
+const DATA = {
+  dribble: {
+    name: '드리블', icon: '⚡', color: '#FF6B1A',
+    routines: [
+      {
+        id: 'drib-beg-0', title: '기초 드리블 마스터', level: 'beginner', time: 30,
+        drills: [
+          { name: '정지 볼 두드리기', desc: '양발을 어깨 너비로 벌리고 서서 한 손으로 허리 높이에서 공을 두드린다. 공을 보지 않고 정면을 바라보며 리듬감 있게 드리블한다. 왼손/오른손 번갈아가며 실시.', tip: '🔑 손 전체가 아니라 손끝과 손바닥 앞부분으로 컨트롤해야 해. 공이 손에서 떠나는 순간을 느껴봐.', sets: 3, reps: '30초', rest: '15초', timerSec: 30 },
+          { name: '낮은 드리블', desc: '무릎을 굽혀 낮은 자세를 유지하면서 공을 최대한 낮게 드리블한다. 발목~무릎 높이를 유지. 속도를 점점 높여가며 연습.', tip: '🔑 자세가 낮아야 공 제어가 쉬워. 허리는 곧게, 고개는 들어!', sets: 3, reps: '30초', rest: '15초', timerSec: 30 },
+          { name: '크로스오버 기초', desc: '오른손에서 왼손으로, 왼손에서 오른손으로 공을 앞에서 교차시킨다. 처음엔 천천히, 익숙해지면 속도를 높인다.', tip: '🔑 공이 이동할 때 받는 손의 손끝이 먼저 준비되어 있어야 해.', sets: 4, reps: '30초', rest: '20초', timerSec: 30 },
+          { name: '제자리 풀 드리블 루틴', desc: '오른손 10번 → 왼손 10번 → 크로스오버 10번을 쉬지 않고 연속으로 진행한다. 이 세트를 반복.', tip: '🔑 박자를 일정하게 유지하는 것이 핵심. 머릿속으로 "1-2-3" 카운트해봐.', sets: 3, reps: '1세트', rest: '30초', timerSec: 60 }
+        ]
+      },
+      {
+        id: 'drib-beg-1', title: '이동 드리블 기초', level: 'beginner', time: 30,
+        drills: [
+          { name: '직선 드리블 왕복', desc: '코트 한 끝에서 다른 끝까지 일직선으로 드리블하며 이동한다. 오른손으로 가고, 왼손으로 돌아온다.', tip: '🔑 달리는 속도에 맞춰 드리블 높이를 조금 높여도 괜찮아. 리듬이 중요!', sets: 4, reps: '왕복', rest: '20초', timerSec: 45 },
+          { name: '지그재그 드리블', desc: '지그재그로 방향을 바꾸며 드리블한다. 방향을 바꿀 때마다 공을 앞쪽으로 밀어주며 크로스오버.', tip: '🔑 방향 전환 순간 발을 먼저 내딛고 공을 따라가는 순서로!', sets: 3, reps: '왕복', rest: '30초', timerSec: 45 },
+          { name: '사이드 드리블 이동', desc: '옆으로 이동하면서 드리블한다. 몸을 틀지 않고 옆으로 스텝하면서 이동. 왼쪽/오른쪽 각각 진행.', tip: '🔑 발이 꼬이지 않게 스텝을 조심해. 처음엔 천천히!', sets: 3, reps: '10m x 2방향', rest: '20초', timerSec: 40 },
+          { name: '속도 변환 드리블', desc: '천천히 드리블하다가 신호에 맞춰 최대 속도로 전환. 빠름-느림을 반복하며 가속과 감속을 연습.', tip: '🔑 실전에서 수비수를 속이는 가장 기본 기술이야. 변화가 갑작스러울수록 좋아!', sets: 4, reps: '30초', rest: '20초', timerSec: 30 }
+        ]
+      },
+      {
+        id: 'drib-int-0', title: '볼핸들링 심화', level: 'intermediate', time: 30,
+        drills: [
+          { name: '비하인드 더 백', desc: '공을 등 뒤로 통과시켜 반대 손으로 받는다. 허리를 살짝 앞으로 숙이고, 공이 등 뒤로 자연스럽게 흐르도록.', tip: '🔑 공을 세게 밀 필요 없어. 가이드해주면 알아서 지나가.', sets: 4, reps: '30초', rest: '20초', timerSec: 30 },
+          { name: '레그 스루', desc: '한 발을 앞으로 내밀고 공을 다리 사이로 통과시킨다. 왼발 앞일 때 오른손→왼손.', tip: '🔑 발을 충분히 앞으로 내밀어야 공이 통과할 공간이 생겨.', sets: 3, reps: '30초', rest: '20초', timerSec: 30 },
+          { name: '스파이더 드리블', desc: '오른손 앞 → 왼손 앞 → 오른손 뒤 → 왼손 뒤 순서로 공을 두드린다. 리듬이 생기면 속도를 올려본다.', tip: '🔑 눈은 정면! 공을 보지 않고 감으로 컨트롤하는 게 목표야.', sets: 3, reps: '30초', rest: '25초', timerSec: 30 },
+          { name: '원 볼 풀 콤보', desc: '크로스오버 → 비하인드 더 백 → 레그 스루를 연속으로 이어서 드리블한다.', tip: '🔑 기술 간 전환이 자연스러워야 해. 끊기면 처음부터 다시!', sets: 3, reps: '1분', rest: '30초', timerSec: 60 }
+        ]
+      },
+      {
+        id: 'drib-int-1', title: '압박 드리블 훈련', level: 'intermediate', time: 30,
+        drills: [
+          { name: '원핸드 패스 드리블', desc: '한 손으로만 드리블하며 코트를 이동한다. 5m마다 손 바꾸기.', tip: '🔑 약한 손 연습을 더 많이 해야 해. 보통 왼손이 약한 경우가 많아.', sets: 4, reps: '왕복', rest: '20초', timerSec: 50 },
+          { name: '스텝백 드리블', desc: '드리블하다가 갑자기 뒤로 스텝을 밟으며 수비수와 거리를 만드는 동작.', tip: '🔑 뒤로 물러설 때 공이 앞에 남겨지지 않도록 같이 끌어당겨!', sets: 3, reps: '20회', rest: '25초', timerSec: 45 },
+          { name: '헤지테이션 드리블', desc: '드리블 속도를 갑자기 늦추거나 멈추는 척 하다가 다시 폭발적으로 가속한다.', tip: '🔑 멈추는 척할 때 몸무게를 살짝 뒤로 빼면 더 리얼하게 보여!', sets: 4, reps: '30초', rest: '20초', timerSec: 30 },
+          { name: '고강도 풀 코트 드리블', desc: '코트 끝에서 끝까지 최대 속도로 드리블 이동. 반환점에서 크로스오버.', tip: '🔑 지쳐도 자세가 무너지면 안 돼. 힘들수록 더 집중!', sets: 5, reps: '왕복', rest: '30초', timerSec: 30 }
+        ]
+      },
+      {
+        id: 'drib-adv-0', title: '엘리트 핸들링', level: 'advanced', time: 30,
+        drills: [
+          { name: '투 볼 드리블', desc: '양손에 공을 하나씩 들고 동시에 드리블한다. 동시에 → 교차를 번갈아가며.', tip: '🔑 두 공의 박자를 정확히 맞추는 것이 핵심이야. 처음엔 천천히!', sets: 4, reps: '30초', rest: '30초', timerSec: 30 },
+          { name: '아이즈업 콘 드리블', desc: '콘 주변을 드리블하며 이동. 공을 절대 보지 않고 콘에 집중하며 컨트롤.', tip: '🔑 프로선수들이 경기 중 공을 안 보는 이유 — 이 훈련 때문이야!', sets: 3, reps: '1분', rest: '30초', timerSec: 60 },
+          { name: '원 레그 드리블', desc: '한 발을 들고 반대 발로만 서서 드리블한다. 20초마다 발을 바꾼다.', tip: '🔑 코어 근육을 꽉 잡아야 흔들리지 않아. 복근에 힘을!', sets: 3, reps: '40초', rest: '25초', timerSec: 40 },
+          { name: '고강도 콤비네이션', desc: '비하인드 백 → 레그 스루 → 스텝백 → 헤지테이션 → 가속을 하나의 흐름으로 연결.', tip: '🔑 이건 실전 드리블이야. 수비수를 상상하면서 해봐!', sets: 4, reps: '45초', rest: '30초', timerSec: 45 }
+        ]
+      }
+    ]
+  },
+  shooting: {
+    name: '슈팅', icon: '🎯', color: '#FFD60A',
+    routines: [
+      {
+        id: 'shot-beg-0', title: '슈팅 폼 기초', level: 'beginner', time: 30,
+        drills: [
+          { name: '미니 폼 슈팅', desc: '골대 아래 1~2m에서 한 손으로 공을 올리는 폼만 연습한다. 넣으려 하지 말고 폼에만 집중.', tip: '🔑 BEEF: Balance(균형) → Eyes(시선) → Elbow(팔꿈치) → Follow-through(팔로스루)', sets: 3, reps: '15회', rest: '20초', timerSec: 0 },
+          { name: '레이업 기초', desc: '오른발 → 왼발 → 점프 → 오른손으로 올리기. 처음엔 공 없이 스텝만 연습. 반대편도.', tip: '🔑 마지막 두 스텝의 리듬이 중요해. 느리게 해도 좋으니 정확하게!', sets: 4, reps: '10회씩', rest: '25초', timerSec: 0 },
+          { name: '자유투 연습', desc: '자유투 라인에서 슈팅. 루틴을 만들어라: 공 튕기기 3번 → 심호흡 → 슈팅.', tip: '🔑 자유투는 멘탈 싸움이야. 루틴을 만들면 긴장감이 줄어들어.', sets: 4, reps: '10슈팅', rest: '20초', timerSec: 0 },
+          { name: '뱅크슛 연습', desc: '45도 각도에서 백보드를 이용한 슈팅. 백보드의 작은 사각형 상단 모서리를 목표로.', tip: '🔑 뱅크슛은 각도 싸움이야. 어디를 맞춰야 들어가는지 감을 익혀!', sets: 3, reps: '10슈팅', rest: '20초', timerSec: 0 }
+        ]
+      },
+      {
+        id: 'shot-beg-1', title: '캐치 앤 슛 기초', level: 'beginner', time: 30,
+        drills: [
+          { name: '스팟 슈팅', desc: '5개 포인트에서 순서대로 슈팅. 각 위치에서 3개씩 넣고 이동.', tip: '🔑 슈팅 전 발의 위치와 방향을 항상 확인해. 발이 골대를 향해야 해.', sets: 2, reps: '15슈팅', rest: '30초', timerSec: 0 },
+          { name: '원 스텝 풀업', desc: '드리블 1~2번 후 한 스텝으로 정지하며 슈팅. 착지 시 양발이 동시에.', tip: '🔑 멈추는 순간 무릎을 굽혀 슈팅 에너지를 모아야 해.', sets: 3, reps: '10슈팅', rest: '25초', timerSec: 0 },
+          { name: '미드레인지 점프슛', desc: '엘보우(골대에서 약 3~4m)에서 드리블 후 점프슛. 양쪽에서 각각 진행.', tip: '🔑 점프 정점에서 쏴야 블로킹 당하기 어려워. 타이밍 연습이 중요!', sets: 4, reps: '8슈팅', rest: '25초', timerSec: 0 },
+          { name: '마무리 연속 레이업', desc: '오른쪽 레이업 → 리바운드 → 빠르게 왼쪽으로 이동 → 왼쪽 레이업. 연속으로.', tip: '🔑 리바운드 후 공을 잡는 동시에 다음 방향으로 몸을 트는 연습도 포함돼.', sets: 3, reps: '2분', rest: '40초', timerSec: 120 }
+        ]
+      },
+      {
+        id: 'shot-int-0', title: '슈팅 레인지 확장', level: 'intermediate', time: 30,
+        drills: [
+          { name: '무빙 슈팅', desc: '달리다가 멈추고 점프슛. 다양한 각도에서 반복.', tip: '🔑 멈출 때 "점프 스톱" — 양발이 동시에 닿아야 트래블링이 아니야.', sets: 4, reps: '10슈팅', rest: '25초', timerSec: 0 },
+          { name: '스크린 후 캐치 슛', desc: '코너에서 링 쪽으로 걸어 나오다가 가상의 패스를 받아 슈팅.', tip: '🔑 "Shot ready" 자세 — 손은 항상 준비, 무릎은 살짝 굽혀.', sets: 3, reps: '10슈팅', rest: '20초', timerSec: 0 },
+          { name: '풀업 점프슛', desc: '드리블로 드라이빙하다가 급정지 후 점프슛. 2~3 드리블 후 실행.', tip: '🔑 제동이 빠를수록 수비수를 뒤에 남겨.', sets: 4, reps: '10슈팅', rest: '25초', timerSec: 0 },
+          { name: '클락 슈팅', desc: '골대 주변을 시계처럼 12시, 3시, 6시, 9시 위치에서 각각 슈팅.', tip: '🔑 위치마다 발 각도가 달라야 해. 항상 골대를 정면으로!', sets: 2, reps: '1바퀴', rest: '40초', timerSec: 0 }
+        ]
+      },
+      {
+        id: 'shot-adv-0', title: '3점슛 & 고난도 슈팅', level: 'advanced', time: 30,
+        drills: [
+          { name: '3점 스팟 슈팅', desc: '3점 라인 5개 포인트에서 각 10슈팅. 성공률을 체크하며 약점 파악.', tip: '🔑 3점슛은 하체 힘이 핵심이야. 무릎을 충분히 굽혔다 펴며!', sets: 2, reps: '10슈팅', rest: '30초', timerSec: 0 },
+          { name: '드리블-인투-3점', desc: '드리블로 윙으로 이동하며 3점 슈팅. 자연스럽게 3점 라인 뒤로.', tip: '🔑 발이 3점 라인 안에 닿지 않도록!', sets: 4, reps: '8슈팅', rest: '25초', timerSec: 0 },
+          { name: '티어드롭 레이업', desc: '드라이빙하다가 골대 앞에서 길게 뜨는 부드러운 슈팅. 높은 포물선으로.', tip: '🔑 손목을 부드럽게, 마치 공을 "올려놓는" 느낌으로 쏴야 해.', sets: 3, reps: '10슈팅', rest: '30초', timerSec: 0 },
+          { name: '파고-인 클락 슈팅', desc: '3점 라인 밖에서 클락 방식으로 드리블 드라이브 후 레이업/풀업 슈팅.', tip: '🔑 왼손 레이업이 어렵다면 오늘 집중적으로!', sets: 3, reps: '1바퀴', rest: '45초', timerSec: 0 }
+        ]
+      }
+    ]
+  },
+  footwork: {
+    name: '풋워크', icon: '👟', color: '#3DDC84',
+    routines: [
+      {
+        id: 'foot-beg-0', title: '기초 스텝 & 민첩성', level: 'beginner', time: 30,
+        drills: [
+          { name: '측면 슬라이드 스텝', desc: '농구 수비 자세로 낮게 앉아 옆으로 슬라이딩 이동. 발이 교차되지 않게. 왼쪽 5m → 오른쪽 5m를 왕복.', tip: '🔑 이게 수비의 기본이야. 항상 어깨 너비 이상 벌려!', sets: 4, reps: '왕복', rest: '20초', timerSec: 40 },
+          { name: '점프 스톱', desc: '달리다가 신호에 맞춰 양발이 동시에 바닥에 닿으며 완전 정지. 공을 들고도 연습.', tip: '🔑 트래블링을 피하려면 이 기술이 필수야. 양발이 동시여야 해!', sets: 4, reps: '10회', rest: '20초', timerSec: 0 },
+          { name: '피벗 연습', desc: '한 발을 고정하고 반대 발로 방향을 360도 돌며 전환. 앞쪽/뒤쪽 피벗 각각 연습.', tip: '🔑 피벗 발이 절대 들리면 안 돼! 발 앞쪽 볼로 지면을 밀면서.', sets: 3, reps: '각 10회', rest: '15초', timerSec: 0 },
+          { name: '박스 스텝 아웃', desc: '가상의 박스 안에서 4방향으로 빠르게 스텝 아웃-인을 반복.', tip: '🔑 처음엔 천천히 패턴을 익히고, 익숙해지면 최대 속도로!', sets: 3, reps: '30초', rest: '20초', timerSec: 30 }
+        ]
+      },
+      {
+        id: 'foot-int-0', title: '공격 풋워크', level: 'intermediate', time: 30,
+        drills: [
+          { name: '유로스텝', desc: '드리블로 돌진하다가 한 발을 한쪽으로, 다음 발을 반대쪽으로 스텝하며 골대를 파고드는 기술.', tip: '🔑 첫 스텝의 방향이 크고 과감해야 해!', sets: 3, reps: '각 방향 8회', rest: '30초', timerSec: 0 },
+          { name: '스텝백 점프슛 스텝', desc: '드리블 중 뒤로 2보 물러서며 공간을 만들고 점프슛 자세를 잡는다.', tip: '🔑 뒤로 갈 때 상체가 뒤로 쏠리면 안 돼. 무게중심을 유지해!', sets: 4, reps: '10회', rest: '25초', timerSec: 0 },
+          { name: '지그재그 컷', desc: 'V컷, L컷 등 방향을 급격히 바꾸는 동작. 공을 받기 위한 공간 창출 움직임.', tip: '🔑 "걷다가 뛰는" 속도 변화가 핵심!', sets: 3, reps: '2분', rest: '30초', timerSec: 120 },
+          { name: '글라이드 스텝', desc: '페인트 동작과 함께 실제 방향으로 폭발적으로 이동. 볼을 들고 실제 상황처럼.', tip: '🔑 페인트가 설득력 있으려면 눈과 어깨로 속여야 해!', sets: 4, reps: '각 방향 10회', rest: '25초', timerSec: 0 }
+        ]
+      },
+      {
+        id: 'foot-adv-0', title: '고급 반응 & 속도', level: 'advanced', time: 30,
+        drills: [
+          { name: '래더 드릴 (가상)', desc: '바닥에 사다리 모양을 상상하고 다양한 패턴으로 발을 빠르게 움직인다.', tip: '🔑 속도보다 정확성이 먼저야!', sets: 4, reps: '30초', rest: '20초', timerSec: 30 },
+          { name: '폭발적 첫 스텝', desc: '가만히 서있다가 특정 방향으로 최대한 빠르게 첫 발을 내딛는 연습. 5m를 최고 속도로 가속.', tip: '🔑 첫 스텝이 게임을 결정해. 무릎을 살짝 굽히고 항상 준비 자세를!', sets: 6, reps: '10회', rest: '20초', timerSec: 0 },
+          { name: '풋워크 콤비네이션', desc: '유로스텝 → 스텝백 → 피벗 → V컷을 하나의 흐름으로 연결. 실전처럼 수행.', tip: '🔑 수비수를 상상하면서 해봐!', sets: 4, reps: '45초', rest: '30초', timerSec: 45 }
+        ]
+      }
+    ]
+  },
+  full: {
+    name: '종합', icon: '🔥', color: '#B86EFF',
+    routines: [
+      {
+        id: 'full-beg-0', title: '30분 풀 루틴 - 초급', level: 'beginner', time: 30,
+        drills: [
+          { name: '워밍업: 조깅 & 스트레칭', desc: '코트를 천천히 3바퀴 조깅 후 발목, 무릎, 고관절, 어깨 순서로 동적 스트레칭.', tip: '🔑 부상 방지를 위해 절대 건너뛰지 마!', sets: 1, reps: '5분', rest: '0초', timerSec: 300 },
+          { name: '드리블 기초 10분', desc: '제자리 드리블 3분 + 이동 드리블 7분. 기본 중의 기본.', tip: '🔑 지루해도 기초가 가장 중요해. 프로도 매일 기초 드리블을 해!', sets: 1, reps: '10분', rest: '30초', timerSec: 600 },
+          { name: '레이업 집중 훈련', desc: '오른쪽 레이업 10개 → 왼쪽 레이업 10개 → 연속 좌우 20개.', tip: '🔑 레이업이 익숙해지면 속도를 높여봐!', sets: 2, reps: '각 10회', rest: '30초', timerSec: 0 },
+          { name: '자유투 마무리', desc: '10개 연습 후 5개 연속 성공을 목표로.', tip: '🔑 자유투 루틴을 만들어. 항상 같은 방식으로 준비하면 긴장이 줄어들어.', sets: 3, reps: '10슈팅', rest: '20초', timerSec: 0 }
+        ]
+      },
+      {
+        id: 'full-int-0', title: '30분 풀 루틴 - 중급', level: 'intermediate', time: 30,
+        drills: [
+          { name: '워밍업 & 볼 감각', desc: '조깅 2바퀴 후 볼 핸들링 워밍업. 손끝으로 공 돌리기, 손목 스냅 연습 등.', tip: '🔑 공을 몸의 일부처럼 느끼는 것부터 시작!', sets: 1, reps: '5분', rest: '0초', timerSec: 300 },
+          { name: '드리블 심화 + 풋워크 결합', desc: '드리블 → 점프 스톱 → 피벗 → 다시 드리블. 실전처럼 연속 수행.', tip: '🔑 드리블-정지-피벗이 실전 공격의 핵심 흐름이야!', sets: 4, reps: '2분', rest: '30초', timerSec: 120 },
+          { name: '5스팟 슈팅', desc: '5개 위치에서 각 5개씩 슈팅. 총 25슈팅.', tip: '🔑 오늘 성공률을 기억해. 발전하는 걸 보면 동기부여가 돼!', sets: 1, reps: '25슈팅', rest: '30초', timerSec: 0 },
+          { name: '마무리 체력 드릴', desc: '풀 코트 드리블 4회 + 레이업 마무리. 지친 상태에서 기술 유지하기.', tip: '🔑 지쳐도 폼을 유지하는 게 진짜 실력이야!', sets: 4, reps: '1세트', rest: '30초', timerSec: 60 }
+        ]
+      },
+      {
+        id: 'full-adv-0', title: '30분 풀 루틴 - 고급', level: 'advanced', time: 30,
+        drills: [
+          { name: '인텐스 워밍업', desc: '가벼운 조깅 1바퀴 후 바로 고강도 드리블 워밍업. 동적으로 몸을 깨우기.', tip: '🔑 고급 훈련은 워밍업도 빡세야 해!', sets: 1, reps: '5분', rest: '0초', timerSec: 300 },
+          { name: '고강도 볼핸들링 서킷', desc: '투 볼 드리블 1분 → 스파이더 45초 → 원 레그 40초 → 콤비네이션 1분. 연속으로.', tip: '🔑 숨이 차도 손은 계속 움직여!', sets: 2, reps: '서킷 1회', rest: '45초', timerSec: 225 },
+          { name: '실전형 무빙 슈팅', desc: '달리면서 캐치 슛, 드리블 풀업, 패스 인 슈팅 등을 실전처럼 수행.', tip: '🔑 실전에서 정적으로 슈팅하는 경우는 자유투뿐이야!', sets: 3, reps: '15슈팅', rest: '30초', timerSec: 0 },
+          { name: '5분 풀 인텐시티 피니시', desc: '드리블 → 레이업 → 3점슛 → 자유투를 번갈아가며 최대 강도로 5분.', tip: '🔑 매 훈련 마지막을 이렇게 끝내면 실전 체력이 급격히 올라가!', sets: 1, reps: '5분', rest: '0초', timerSec: 300 }
+        ]
+      }
+    ]
+  }
+};
+
+// ══════════════════════════════════════════
+// 상태
+// ══════════════════════════════════════════
+let currentScreen = 'home';
+let currentCategory = null;
+let currentRoutine = null;
+let currentDrillIndex = 0;
+let completedDrills = [];
+let timerInterval = null;
+let timerRunning = false;
+let timerSeconds = 0;
+let timerMax = 0;
+let records = JSON.parse(localStorage.getItem('bbRecords') || '[]');
+let currentFilterLevel = 'all';
+let allFilterLevel = 'all';
+let trainingStartTime = null;
+
+// ══════════════════════════════════════════
+// 화면 전환
+// ══════════════════════════════════════════
+function showScreen(name, navEl) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('screen-' + name);
+  el.classList.add('active', 'fade-in');
+  setTimeout(() => el.classList.remove('fade-in'), 400);
+  currentScreen = name;
+
+  const isMain = ['home','programs','records'].includes(name);
+  document.getElementById('bottomNav').style.display = isMain ? 'flex' : 'none';
+  document.getElementById('backBtn').style.display = isMain ? 'none' : 'block';
+  if (navEl && isMain) {
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    navEl.classList.add('active');
+  }
+
+  const titles = {
+    home: ['농구 훈련 코치','혼자도 강해질 수 있다'],
+    programs: ['전체 프로그램','레벨별로 선택하세요'],
+    records: ['나의 기록','훈련 히스토리'],
+    category: [(DATA[currentCategory]?.name||'') + ' 훈련','레벨별 루틴'],
+    training: [currentRoutine?.title||'훈련 중','파이팅! 🔥'],
+    finish: ['훈련 완료','']
+  };
+  const t = titles[name] || ['농구 훈련 코치',''];
+  document.getElementById('headerTitle').textContent = t[0];
+  document.getElementById('headerSub').textContent = t[1];
+
+  if (name === 'programs') renderAllRoutines();
+  if (name === 'records') renderRecords();
+}
+
+function goBack() {
+  if (currentScreen === 'training') {
+    if (!confirm('훈련을 중단할까요?')) return;
+    stopTimer();
+  }
+  if (currentScreen === 'category') showScreen('home', document.querySelector('.nav-item'));
+  else if (currentScreen === 'training') {
+    if (currentCategory) showScreen('category', null);
+    else showScreen('programs', null);
+  } else if (currentScreen === 'finish') goHome();
+  else showScreen('home', document.querySelector('.nav-item'));
+}
+
+function goHome() {
+  stopTimer();
+  showScreen('home', document.querySelectorAll('.nav-item')[0]);
+  renderWeeklyRecords();
+}
+
+(function initDate() {
+  const days = ['일','월','화','수','목','금','토'];
+  const now = new Date();
+  document.getElementById('todayDate').textContent =
+    `${now.getFullYear()}년 ${now.getMonth()+1}월 ${now.getDate()}일 (${days[now.getDay()]})`;
+})();
+
+// ══════════════════════════════════════════
+// 카테고리
+// ══════════════════════════════════════════
+function showCategory(cat) {
+  currentCategory = cat;
+  currentFilterLevel = 'all';
+  document.getElementById('categoryLabel').textContent = DATA[cat].name + ' 루틴';
+  document.querySelectorAll('#catLevelTabs .level-tab').forEach((t,i) => t.classList.toggle('active', i===0));
+  renderCatRoutines();
+  showScreen('category', null);
+}
+function filterCatLevel(level, el) {
+  currentFilterLevel = level;
+  document.querySelectorAll('#catLevelTabs .level-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderCatRoutines();
+}
+function renderCatRoutines() {
+  const cat = DATA[currentCategory];
+  const filtered = currentFilterLevel === 'all' ? cat.routines : cat.routines.filter(r => r.level === currentFilterLevel);
+  document.getElementById('catRoutineList').innerHTML = filtered.map(r => routineCardHTML(r, currentCategory)).join('');
+}
+
+function filterLevel(level, el) {
+  allFilterLevel = level;
+  document.querySelectorAll('#levelTabs .level-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderAllRoutines();
+}
+function renderAllRoutines() {
+  let html = '';
+  Object.keys(DATA).forEach(cat => {
+    const filtered = allFilterLevel === 'all' ? DATA[cat].routines : DATA[cat].routines.filter(r => r.level === allFilterLevel);
+    if (!filtered.length) return;
+    html += `<div class="section-label" style="margin-top:16px">${DATA[cat].icon} ${DATA[cat].name}</div>`;
+    html += filtered.map(r => routineCardHTML(r, cat)).join('');
+  });
+  document.getElementById('routineList').innerHTML = html;
+}
+
+function routineCardHTML(r, cat) {
+  const ll = {beginner:'초급 ⭐',intermediate:'중급 ⭐⭐',advanced:'고급 ⭐⭐⭐'}[r.level];
+  const lc = {beginner:'level-beginner',intermediate:'level-intermediate',advanced:'level-advanced'}[r.level];
+  const tags = r.drills.map(d => `<span class="drill-tag">${d.name}</span>`).join('');
+  return `<div class="routine-card">
+    <div class="routine-header"><div class="routine-title">${r.title}</div><div class="routine-level ${lc}">${ll}</div></div>
+    <div class="routine-drills">${tags}</div>
+    <div class="routine-footer">
+      <div class="routine-time">⏱ ${r.time}분 · ${r.drills.length}개 드릴</div>
+      <button class="routine-start-btn" onclick="startRoutine('${cat}','${r.id}')">시작 →</button>
+    </div>
+  </div>`;
+}
+
+// ══════════════════════════════════════════
+// 훈련
+// ══════════════════════════════════════════
+function startRoutine(cat, routineId) {
+  currentCategory = cat;
+  currentRoutine = DATA[cat].routines.find(r => r.id === routineId);
+  currentDrillIndex = 0;
+  completedDrills = new Array(currentRoutine.drills.length).fill(false);
+  trainingStartTime = Date.now();
+  stopTimer();
+  loadDrill(0);
+  showScreen('training', null);
+}
+function startRoutineById(cat, level, idx) {
+  const r = DATA[cat].routines.filter(r => r.level === level)[idx];
+  if (r) startRoutine(cat, r.id);
+}
+
+function loadDrill(index) {
+  const drill = currentRoutine.drills[index];
+  const total = currentRoutine.drills.length;
+  const pct = Math.round((index / total) * 100);
+
+  document.getElementById('progressText').textContent = `드릴 ${index+1} / ${total}`;
+  document.getElementById('progressPct').textContent = pct + '%';
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('drillNumber').textContent = `DRILL ${String(index+1).padStart(2,'0')}`;
+  document.getElementById('drillName').textContent = drill.name;
+  document.getElementById('drillDesc').textContent = drill.desc;
+  document.getElementById('drillTip').textContent = drill.tip;
+  document.getElementById('drillSets').textContent = drill.sets;
+  document.getElementById('drillReps').textContent = drill.reps;
+  document.getElementById('drillRest').textContent = drill.rest;
+
+  // SVG 시각화
+  document.getElementById('drillVisual').innerHTML = buildDrillSVG(drill.name);
+
+  // 유튜브 링크
+  document.getElementById('youtubeBtn').href = getYoutubeURL(drill.name);
+
+  // 타이머
+  const hasTimer = drill.timerSec > 0;
+  document.getElementById('timerSection').style.display = hasTimer ? 'block' : 'none';
+  if (hasTimer) { timerMax = drill.timerSec; timerSeconds = drill.timerSec; updateTimerDisplay(); }
+  stopTimer();
+  document.getElementById('timerStartBtn').textContent = '▶ 시작';
+  timerRunning = false;
+
+  // 완료 버튼
+  const btn = document.getElementById('completeDrillBtn');
+  if (completedDrills[index]) {
+    btn.textContent = '✅ 완료됨'; btn.classList.add('done-drill');
+  } else {
+    btn.textContent = index === total-1 ? '🏆 훈련 완료!' : '✅ 드릴 완료 → 다음';
+    btn.classList.remove('done-drill');
+  }
+
+  renderDrillDots();
+}
+
+function renderDrillDots() {
+  const total = currentRoutine.drills.length;
+  let html = '';
+  for (let i = 0; i < total; i++) {
+    let cls = completedDrills[i] ? 'completed' : (i === currentDrillIndex ? 'current' : '');
+    html += `<div class="drill-dot ${cls}" onclick="loadDrill(${i})">${i+1}</div>`;
+  }
+  document.getElementById('drillDots').innerHTML = html;
+}
+
+function completeDrill() {
+  if (completedDrills[currentDrillIndex]) return;
+  completedDrills[currentDrillIndex] = true;
+  stopTimer();
+  if (completedDrills.every(Boolean)) { finishTraining(); return; }
+  let next = currentDrillIndex + 1;
+  const total = currentRoutine.drills.length;
+  while (next < total && completedDrills[next]) next++;
+  if (next < total) { currentDrillIndex = next; loadDrill(next); }
+}
+
+function finishTraining() {
+  stopTimer();
+  const elapsed = Math.round((Date.now() - trainingStartTime) / 60000);
+  const record = {
+    id: Date.now(), routineTitle: currentRoutine.title,
+    category: DATA[currentCategory].name, level: currentRoutine.level,
+    drills: currentRoutine.drills.length, time: elapsed,
+    date: new Date().toLocaleDateString('ko-KR')
+  };
+  records.unshift(record);
+  localStorage.setItem('bbRecords', JSON.stringify(records.slice(0,50)));
+  document.getElementById('finishDrills').textContent = currentRoutine.drills.length;
+  document.getElementById('finishTime').textContent = elapsed + '분';
+  document.getElementById('finishSub').textContent = `"${currentRoutine.title}" 완료! 오늘도 한 걸음 성장했다 💪`;
+  document.getElementById('progressText').textContent = '완료!';
+  document.getElementById('progressPct').textContent = '100%';
+  document.getElementById('progressFill').style.width = '100%';
+  showScreen('finish', null);
+}
+
+// ══════════════════════════════════════════
+// 타이머
+// ══════════════════════════════════════════
+function toggleTimer() {
+  if (timerRunning) { stopTimer(); document.getElementById('timerStartBtn').textContent = '▶ 재개'; }
+  else { startTimerCount(); document.getElementById('timerStartBtn').textContent = '⏸ 일시정지'; }
+}
+function startTimerCount() {
+  timerRunning = true;
+  timerInterval = setInterval(() => {
+    if (timerSeconds <= 0) {
+      stopTimer();
+      document.getElementById('timerDisplay').textContent = '완료! 🎉';
+      document.getElementById('timerDisplay').className = 'timer-display done';
+      document.getElementById('timerStartBtn').textContent = '▶ 다시';
+      timerSeconds = timerMax; return;
+    }
+    timerSeconds--;
+    updateTimerDisplay();
+    document.getElementById('timerDisplay').className = 'timer-display' + (timerSeconds <= 5 ? ' warning' : '');
+  }, 1000);
+}
+function stopTimer() {
+  clearInterval(timerInterval); timerInterval = null; timerRunning = false;
+}
+function resetTimer() {
+  stopTimer(); timerSeconds = timerMax; updateTimerDisplay();
+  document.getElementById('timerDisplay').className = 'timer-display';
+  document.getElementById('timerStartBtn').textContent = '▶ 시작';
+}
+function updateTimerDisplay() {
+  const m = Math.floor(timerSeconds/60), s = timerSeconds%60;
+  document.getElementById('timerDisplay').textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+}
+
+// ══════════════════════════════════════════
+// 기록
+// ══════════════════════════════════════════
+function renderRecords() {
+  const el = document.getElementById('allRecords');
+  const ll = {beginner:'초급',intermediate:'중급',advanced:'고급'};
+  if (!records.length) { el.innerHTML = `<div class="record-empty"><div class="icon">📊</div><p>아직 완료한 훈련이 없어요.<br>오늘 첫 훈련을 시작해보세요!</p></div>`; return; }
+  el.innerHTML = records.map(r => `<div class="record-item"><div class="record-dot"></div><div class="record-info"><div class="record-name">${r.routineTitle}</div><div class="record-date">${r.date} · ${r.category} · ${r.time}분 · ${r.drills}드릴</div></div><div class="record-badge">${ll[r.level]||r.level}</div></div>`).join('');
+}
+function renderWeeklyRecords() {
+  const el = document.getElementById('weeklyRecords');
+  const ll = {beginner:'초급',intermediate:'중급',advanced:'고급'};
+  const weekly = records.filter(r => new Date(r.date) >= new Date(Date.now()-7*24*60*60*1000)).slice(0,5);
+  if (!weekly.length) { el.innerHTML = `<div class="record-empty"><div class="icon">🌱</div><p>아직 완료한 훈련이 없어요<br>오늘 첫 훈련을 시작해보세요!</p></div>`; return; }
+  el.innerHTML = weekly.map(r => `<div class="record-item"><div class="record-dot"></div><div class="record-info"><div class="record-name">${r.routineTitle}</div><div class="record-date">${r.date} · ${r.time}분</div></div><div class="record-badge">${ll[r.level]||r.level}</div></div>`).join('');
+}
+
+// ══════════════════════════════════════════
+// 오늘의 추천 (요일별)
+// ══════════════════════════════════════════
+(function initToday() {
+  const day = new Date().getDay();
+  const todayMap = [
+    {cat:'full', level:'beginner', idx:0, title:'30분 풀 루틴 - 초급'},
+    {cat:'dribble', level:'beginner', idx:0, title:'기초 드리블 마스터'},
+    {cat:'shooting', level:'beginner', idx:0, title:'슈팅 폼 기초'},
+    {cat:'footwork', level:'beginner', idx:0, title:'기초 스텝 & 민첩성'},
+    {cat:'dribble', level:'intermediate', idx:0, title:'볼핸들링 심화'},
+    {cat:'shooting', level:'intermediate', idx:0, title:'슈팅 레인지 확장'},
+    {cat:'full', level:'intermediate', idx:0, title:'30분 풀 루틴 - 중급'},
+  ];
+  const t = todayMap[day];
+  document.getElementById('todayRoutineTitle').textContent = t.title;
+  document.getElementById('todayCard').onclick = () => {
+    currentCategory = t.cat;
+    const r = DATA[t.cat].routines.filter(r => r.level === t.level)[t.idx];
+    if (r) startRoutine(t.cat, r.id);
+  };
+  document.getElementById('todayMeta').innerHTML =
+    `<span>⏱ 30분</span><span>${DATA[t.cat].icon} ${DATA[t.cat].name}</span><span>⭐ ${{beginner:'초급',intermediate:'중급',advanced:'고급'}[t.level]}</span>`;
+})();
+
+renderWeeklyRecords();
+</script>
+</body>
+</html>
