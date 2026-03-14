@@ -341,6 +341,121 @@
   @keyframes clock-move { 0%{transform:translate(50px,0)} 25%{transform:translate(90px,50px)} 50%{transform:translate(50px,90px)} 75%{transform:translate(10px,50px)} 100%{transform:translate(50px,0)} }
   @keyframes fade-in { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
 
+
+  /* ── NBA 선수 카드 ── */
+  .nba-player-card {
+    background: var(--dark3);
+    border: 1px solid var(--dark4);
+    border-radius: 18px;
+    padding: 18px;
+    margin-bottom: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    overflow: hidden;
+    position: relative;
+  }
+  .nba-player-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+  }
+  .nba-player-card:active { transform: scale(0.98); }
+  .nba-player-emoji { font-size: 44px; flex-shrink: 0; }
+  .nba-player-info { flex: 1; }
+  .nba-player-name {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 18px;
+    margin-bottom: 3px;
+  }
+  .nba-player-team { font-size: 11px; color: var(--text-dim); margin-bottom: 6px; }
+  .nba-player-signature {
+    font-size: 12px;
+    color: var(--orange);
+    font-weight: 700;
+  }
+  .nba-player-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+  .nba-player-tag {
+    font-size: 10px;
+    background: var(--dark4);
+    color: var(--text-dim);
+    padding: 2px 7px;
+    border-radius: 5px;
+  }
+  .nba-arrow { font-size: 18px; color: var(--text-dim); flex-shrink: 0; }
+
+  /* NBA 선수 상세 헤로 */
+  .nba-hero {
+    border-radius: 18px;
+    padding: 24px 20px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .nba-hero-emoji { font-size: 56px; margin-bottom: 10px; display: block; }
+  .nba-hero-name {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 28px;
+    margin-bottom: 4px;
+  }
+  .nba-hero-team { font-size: 13px; opacity: 0.7; margin-bottom: 12px; }
+  .nba-hero-desc { font-size: 13px; line-height: 1.6; opacity: 0.85; }
+
+  /* 시그니처 무브 카드 */
+  .signature-card {
+    background: var(--dark3);
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 14px;
+    border: 1px solid var(--dark4);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .signature-card:active { transform: scale(0.98); }
+  .signature-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+  }
+  .signature-name {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 17px;
+    flex: 1;
+  }
+  .signature-difficulty {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 20px;
+    margin-left: 8px;
+    flex-shrink: 0;
+  }
+  .diff-beginner { background: rgba(61,220,132,0.2); color: var(--green); }
+  .diff-intermediate { background: rgba(255,214,10,0.2); color: var(--yellow); }
+  .diff-advanced { background: rgba(255,107,26,0.2); color: var(--orange); }
+  .signature-desc { font-size: 12px; color: var(--text-dim); line-height: 1.5; margin-bottom: 10px; }
+  .signature-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .signature-steps { font-size: 11px; color: var(--text-dim); }
+  .signature-start-btn {
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 7px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+
   .fade-in { animation: fade-in 0.3s ease; }
 </style>
 </head>
@@ -361,6 +476,9 @@
   </button>
   <button class="nav-item" onclick="showScreen('programs',this)">
     <span class="nav-icon">📋</span><span class="nav-label">프로그램</span>
+  </button>
+  <button class="nav-item" onclick="showScreen('nba',this)">
+    <span class="nav-icon">⭐</span><span class="nav-label">NBA</span>
   </button>
   <button class="nav-item" onclick="showScreen('records',this)">
     <span class="nav-icon">📊</span><span class="nav-label">기록</span>
@@ -503,6 +621,144 @@
       <button class="btn-primary" onclick="goHome()">🏠 홈으로</button>
       <button class="btn-secondary" onclick="showScreen('programs', document.querySelectorAll('.nav-item')[1])">다른 루틴 보기</button>
     </div>
+  </div>
+</div>
+
+<!-- NBA 선수 목록 -->
+<div class="screen" id="screen-nba">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+    <div class="section-label" style="margin-bottom:0">NBA 레전드 무브 따라하기</div>
+    <button onclick="openAddPlayerModal()" style="background:var(--orange);color:white;border:none;border-radius:20px;padding:7px 14px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;display:flex;align-items:center;gap:5px;">
+      ＋ 선수 추가
+    </button>
+  </div>
+  <p style="font-size:12px;color:var(--text-dim);margin-bottom:18px;">프로 선수의 시그니처 무브를 단계별로 훈련해보자!</p>
+  <div id="nbaPlayerList"></div>
+</div>
+
+<!-- 선수 추가 모달 -->
+<div id="addPlayerModal" style="display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.85);overflow-y:auto;">
+  <div style="background:#1A1A1A;border-radius:20px 20px 0 0;padding:24px 20px 40px;margin-top:60px;min-height:calc(100vh - 60px);">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+      <div style="font-family:'Black Han Sans',sans-serif;font-size:20px;color:var(--orange);">선수 추가</div>
+      <button onclick="closeAddPlayerModal()" style="background:var(--dark4);border:none;border-radius:50%;width:32px;height:32px;font-size:18px;color:var(--text-dim);cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
+    </div>
+
+    <!-- 선수 기본 정보 -->
+    <div style="font-size:11px;color:var(--orange);font-weight:700;letter-spacing:2px;margin-bottom:10px;">선수 정보</div>
+    <div style="display:grid;grid-template-columns:60px 1fr;gap:10px;margin-bottom:12px;align-items:center;">
+      <div>
+        <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px;">이모지</div>
+        <input id="addEmoji" type="text" value="🏀" maxlength="4"
+          style="width:100%;background:var(--dark3);border:1px solid var(--dark4);border-radius:10px;padding:10px;color:var(--text);font-size:22px;text-align:center;">
+      </div>
+      <div>
+        <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px;">선수 이름 *</div>
+        <input id="addName" type="text" placeholder="예: 마이클 조던" maxlength="20"
+          style="width:100%;background:var(--dark3);border:1px solid var(--dark4);border-radius:10px;padding:10px;color:var(--text);font-size:14px;font-family:'Noto Sans KR',sans-serif;">
+      </div>
+    </div>
+    <div style="margin-bottom:16px;">
+      <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px;">팀 / 포지션</div>
+      <input id="addTeam" type="text" placeholder="예: Chicago Bulls | SG"
+        style="width:100%;background:var(--dark3);border:1px solid var(--dark4);border-radius:10px;padding:10px;color:var(--text);font-size:14px;font-family:'Noto Sans KR',sans-serif;">
+    </div>
+    <div style="margin-bottom:20px;">
+      <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px;">선수 소개</div>
+      <textarea id="addBio" placeholder="선수에 대한 간단한 소개..." rows="2"
+        style="width:100%;background:var(--dark3);border:1px solid var(--dark4);border-radius:10px;padding:10px;color:var(--text);font-size:14px;resize:none;font-family:'Noto Sans KR',sans-serif;"></textarea>
+    </div>
+
+    <!-- 시그니처 무브 -->
+    <div style="font-size:11px;color:var(--orange);font-weight:700;letter-spacing:2px;margin-bottom:10px;">시그니처 무브</div>
+    <div style="margin-bottom:12px;">
+      <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px;">무브 이름 *</div>
+      <input id="addMoveName" type="text" placeholder="예: 미드에어 페이드어웨이" maxlength="30"
+        style="width:100%;background:var(--dark3);border:1px solid var(--dark4);border-radius:10px;padding:10px;color:var(--text);font-size:14px;font-family:'Noto Sans KR',sans-serif;">
+    </div>
+    <div style="margin-bottom:12px;">
+      <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px;">무브 설명</div>
+      <textarea id="addMoveDesc" placeholder="이 무브에 대한 설명..." rows="2"
+        style="width:100%;background:var(--dark3);border:1px solid var(--dark4);border-radius:10px;padding:10px;color:var(--text);font-size:14px;resize:none;font-family:'Noto Sans KR',sans-serif;"></textarea>
+    </div>
+    <div style="margin-bottom:16px;">
+      <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px;">난이도</div>
+      <div style="display:flex;gap:8px;">
+        <button onclick="selectDiff('beginner',this)" data-diff="beginner"
+          class="diff-select-btn" style="flex:1;padding:8px;border-radius:10px;border:1px solid var(--dark4);background:var(--dark3);color:var(--text-dim);font-size:12px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">초급 ⭐</button>
+        <button onclick="selectDiff('intermediate',this)" data-diff="intermediate"
+          class="diff-select-btn" style="flex:1;padding:8px;border-radius:10px;border:1px solid var(--dark4);background:var(--dark3);color:var(--text-dim);font-size:12px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">중급 ⭐⭐</button>
+        <button onclick="selectDiff('advanced',this)" data-diff="advanced"
+          class="diff-select-btn" style="flex:1;padding:8px;border-radius:10px;border:1px solid var(--dark4);background:var(--dark3);color:var(--text-dim);font-size:12px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">고급 ⭐⭐⭐</button>
+      </div>
+    </div>
+
+    <!-- 단계별 훈련 -->
+    <div style="font-size:11px;color:var(--orange);font-weight:700;letter-spacing:2px;margin-bottom:10px;">단계별 훈련</div>
+    <div id="stepsContainer"></div>
+    <button onclick="addStep()" style="width:100%;padding:12px;background:var(--dark3);border:1px dashed var(--dark4);border-radius:12px;color:var(--text-dim);font-size:14px;cursor:pointer;margin-bottom:20px;font-family:'Noto Sans KR',sans-serif;">
+      ＋ 훈련 단계 추가 (최대 3단계)
+    </button>
+
+    <!-- 저장 버튼 -->
+    <button onclick="saveCustomPlayer()"
+      style="width:100%;padding:16px;background:var(--orange);border:none;border-radius:14px;color:white;font-size:16px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">
+      저장하기
+    </button>
+  </div>
+</div>
+
+<!-- 선수 편집 모달 (추가 모달 복제 구조) -->
+<div id="editPlayerModal" style="display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.85);overflow-y:auto;">
+  <div style="background:#1A1A1A;border-radius:20px 20px 0 0;padding:24px 20px 40px;margin-top:60px;min-height:calc(100vh - 60px);">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+      <div style="font-family:'Black Han Sans',sans-serif;font-size:20px;color:var(--orange);">선수 편집</div>
+      <button onclick="closeEditModal()" style="background:var(--dark4);border:none;border-radius:50%;width:32px;height:32px;font-size:18px;color:var(--text-dim);cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
+    </div>
+    <div id="editModalContent"></div>
+  </div>
+</div>
+
+<!-- NBA 선수 상세 -->
+<div class="screen" id="screen-nba-player">
+  <div id="nbaPlayerHero"></div>
+  <div id="nbaPlayerContent"></div>
+</div>
+
+<!-- NBA 드릴 훈련 -->
+<div class="screen" id="screen-nba-training">
+  <div class="training-progress">
+    <div class="progress-label">
+      <span id="nbaProgressText">단계 1 / 3</span>
+      <span id="nbaProgressPct">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="nbaProgressFill" style="width:0%"></div>
+    </div>
+  </div>
+  <div class="drill-list-mini" id="nbaDrillDots"></div>
+  <div class="drill-card fade-in">
+    <div class="drill-number" id="nbaDrillNumber">STEP 01</div>
+    <div class="drill-name" id="nbaDrillName">-</div>
+    <div class="drill-visual" id="nbaDrillVisual"></div>
+    <a class="youtube-btn" id="nbaYoutubeBtn" href="#" target="_blank">
+      <span class="youtube-icon">▶</span> 유튜브에서 동작 보기
+    </a>
+    <div class="drill-desc" id="nbaDrillDesc">-</div>
+    <div class="drill-tip" id="nbaDrillTip">-</div>
+    <div class="drill-meta-row">
+      <div class="drill-meta-item"><div class="val" id="nbaDrillSets">-</div><div class="lbl">세트</div></div>
+      <div class="drill-meta-item"><div class="val" id="nbaDrillReps">-</div><div class="lbl">횟수/시간</div></div>
+      <div class="drill-meta-item"><div class="val" id="nbaDrillRest">-</div><div class="lbl">휴식</div></div>
+    </div>
+    <div class="timer-section" id="nbaTimerSection">
+      <div class="timer-display" id="nbaTimerDisplay">00:00</div>
+      <div class="timer-controls">
+        <button class="timer-btn start" id="nbaTimerStartBtn" onclick="toggleNbaTimer()">▶ 시작</button>
+        <button class="timer-btn reset" onclick="resetNbaTimer()">↺ 리셋</button>
+      </div>
+    </div>
+    <button class="complete-btn" id="nbaCompleteDrillBtn" onclick="completeNbaDrill()">✅ 완료 → 다음 단계</button>
   </div>
 </div>
 
@@ -1480,7 +1736,7 @@ function showScreen(name, navEl) {
   setTimeout(() => el.classList.remove('fade-in'), 400);
   currentScreen = name;
 
-  const isMain = ['home','programs','records'].includes(name);
+  const isMain = ['home','programs','records','nba'].includes(name);
   document.getElementById('bottomNav').style.display = isMain ? 'flex' : 'none';
   document.getElementById('backBtn').style.display = isMain ? 'none' : 'block';
   if (navEl && isMain) {
@@ -1492,6 +1748,9 @@ function showScreen(name, navEl) {
     home: ['농구 훈련 코치','혼자도 강해질 수 있다'],
     programs: ['전체 프로그램','레벨별로 선택하세요'],
     records: ['나의 기록','훈련 히스토리'],
+    nba: ['NBA 레전드 무브','시그니처 무브 따라하기'],
+    'nba-player': [currentNbaPlayer?.name||'NBA 선수','시그니처 무브'],
+    'nba-training': [currentNbaMove?.name||'무브 훈련','단계별 훈련 중 🔥'],
     category: [(DATA[currentCategory]?.name||'') + ' 훈련','레벨별 루틴'],
     training: [currentRoutine?.title||'훈련 중','파이팅! 🔥'],
     finish: ['훈련 완료','']
@@ -1502,6 +1761,7 @@ function showScreen(name, navEl) {
 
   if (name === 'programs') renderAllRoutines();
   if (name === 'records') renderRecords();
+  if (name === 'nba') renderNbaPlayers();
 }
 
 function goBack() {
@@ -1509,6 +1769,12 @@ function goBack() {
     if (!confirm('훈련을 중단할까요?')) return;
     stopTimer();
   }
+  if (currentScreen === 'nba-training') {
+    if (!confirm('훈련을 중단할까요?')) return;
+    stopNbaTimer();
+    showScreen('nba-player', null); return;
+  }
+  if (currentScreen === 'nba-player') { showScreen('nba', null); return; }
   if (currentScreen === 'category') showScreen('home', document.querySelector('.nav-item'));
   else if (currentScreen === 'training') {
     if (currentCategory) showScreen('category', null);
@@ -1520,7 +1786,6 @@ function goBack() {
 function goHome() {
   stopTimer();
   showScreen('home', document.querySelectorAll('.nav-item')[0]);
-  renderWeeklyRecords();
 }
 
 (function initDate() {
@@ -1762,6 +2027,717 @@ function renderWeeklyRecords() {
     `<span>⏱ 30분</span><span>${DATA[t.cat].icon} ${DATA[t.cat].name}</span><span>⭐ ${{beginner:'초급',intermediate:'중급',advanced:'고급'}[t.level]}</span>`;
 })();
 
+
+// ══════════════════════════════════════════
+// NBA 선수 데이터
+// ══════════════════════════════════════════
+const NBA_PLAYERS = [
+  {
+    id: 'curry',
+    emoji: ' curry',
+    name: '스테픈 커리',
+    team: 'Golden State Warriors | PG',
+    color: '#1D428A',
+    accentColor: '#FFC72C',
+    bio: '역사상 최고의 슈터. 믿을 수 없는 레인지와 풀코트 드리블에서 바로 연결되는 슈팅이 시그니처.',
+    moves: [
+      {
+        name: '풀코트 드리블 → 스텝백 3점',
+        difficulty: 'advanced',
+        desc: '하프라인을 넘어오자마자 뒤로 스텝을 밟으며 3점 슈팅. 수비가 미처 반응하기 전에 공간을 만드는 커리의 핵심 무브.',
+        steps: [
+          { name: '드리블 속도 변환 기초', desc: '천천히 드리블하다가 갑자기 폭발적으로 가속. 수비의 리듬을 깨는 첫 번째 단계. 커리는 이 변화를 활용해 수비를 뒤로 밀어낸다.', tip: '🔑 가속 직전 살짝 멈추는 헤지테이션이 핵심. 수비수의 무게중심이 흔들리는 순간을 만들어!', sets: 4, reps: '30초', rest: '20초', timerSec: 30, yt: 'curry hesitation dribble speed change drill' },
+          { name: '스텝백 모션 연습', desc: '드리블 중 뒤로 2보 물러서며 3점 라인 밖으로 나가는 동작. 발 순서: 오른발 뒤→왼발 뒤→점프. 스텝백 후 바로 슈팅 준비 자세를 만든다.', tip: '🔑 뒤로 물러설 때 공이 앞에 떨어지지 않게! 공도 같이 따라와야 해.', sets: 4, reps: '15회', rest: '25초', timerSec: 0, yt: 'steph curry step back three pointer drill' },
+          { name: '풀코트 드리블 → 스텝백 슈팅 연결', desc: '하프라인에서 드리블로 돌진 → 3점 라인 근처에서 헤지테이션 → 스텝백 → 3점슛. 전체 시퀀스를 실전처럼 연결. 커리의 시그니처 그 자체.', tip: '🔑 스텝백 후 균형이 잡혀야 슈팅이 정확해. 서두르지 말고 발부터 고정!', sets: 3, reps: '10슈팅', rest: '40초', timerSec: 0, yt: 'steph curry full court dribble step back three' },
+        ]
+      },
+      {
+        name: '스플래시 캐치 앤 슛',
+        difficulty: 'intermediate',
+        desc: '스크린을 이용해 공간을 만들고 패스를 받는 순간 바로 3점슛. 커리는 패스를 받기 전에 이미 슈팅 자세가 완성되어 있다.',
+        steps: [
+          { name: '캐치 앤 슛 폼 연습', desc: '공을 받는 순간 무릎이 굽혀져 있어야 한다. 공을 받자마자 릴리즈까지 0.5초를 목표로. 손은 항상 준비 자세로 기다린다.', tip: '🔑 "Shot ready" 자세가 핵심. 공이 오기 전에 이미 쏠 준비가 되어 있어야 해!', sets: 4, reps: '15슈팅', rest: '20초', timerSec: 0, yt: 'catch and shoot three pointer quick release' },
+          { name: '움직임 후 캐치 앤 슛', desc: 'V컷으로 공간을 만든 뒤 패스(공을 벽에 던지거나 혼자 던지고 받기)를 캐치해서 바로 3점슛. 이동 후 정확한 착지가 핵심.', tip: '🔑 컷 후 착지할 때 발끝이 골대를 향해 있어야 해. 몸의 방향이 슈팅 정확도를 결정해!', sets: 3, reps: '12슈팅', rest: '30초', timerSec: 0, yt: 'off ball movement catch shoot three pointer drill' },
+          { name: '3점 라인 5스팟 퀵 슈팅', desc: '3점 라인 5개 위치에서 각 5개씩. 최대한 빠른 릴리즈로 슈팅. 성공률 70% 이상을 목표로.', tip: '🔑 커리의 릴리즈 포인트는 이마 위! 너무 낮으면 블로킹 당해.', sets: 2, reps: '5개×5위치', rest: '40초', timerSec: 0, yt: 'curry three point shooting 5 spots drill' },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'lebron',
+    emoji: '👑',
+    name: '르브론 제임스',
+    team: 'Los Angeles Lakers | SF',
+    color: '#552583',
+    accentColor: '#FDB927',
+    bio: '압도적인 체력과 IQ를 가진 역대 최고의 올라운더. 파워 드라이브와 포스트업에서 나오는 피지컬 무브가 시그니처.',
+    moves: [
+      {
+        name: '파워 드라이브 투 핀치',
+        difficulty: 'intermediate',
+        desc: '한 손으로 공을 잡고 몸으로 수비를 밀어내며 레이업 또는 덩크. 체력과 핸들링을 동시에 쓰는 르브론의 대표 무브.',
+        steps: [
+          { name: '원핸드 드리블 드라이브', desc: '한 손으로 공을 잡으며 몸통으로 수비를 압박하는 드라이브. 드리블 없이 1-2스텝으로 골대를 향해 돌진하는 연습.', tip: '🔑 어깨를 앞으로 낮추고 드라이브해야 수비를 효과적으로 밀어낼 수 있어!', sets: 4, reps: '10회', rest: '30초', timerSec: 0, yt: 'power drive one hand layup finish drill' },
+          { name: '접촉 상황 레이업 피니시', desc: '벽이나 가방 등 장애물 옆을 지나치며 레이업. 신체 접촉 상황에서도 흔들리지 않는 피니시 연습.', tip: '🔑 접촉을 두려워하면 안 돼. 오히려 몸으로 먼저 들어가야 파울을 얻어낼 수 있어!', sets: 3, reps: '각 방향 8회', rest: '30초', timerSec: 0, yt: 'contact layup finish basketball drill' },
+          { name: '전속력 레이업 → 롤인 피니시', desc: '풀 스피드로 달려와서 골대 아래를 파고드는 레이업. 오른쪽/왼쪽 각 10회. 몸 전체의 에너지를 슈팅에 집중.', tip: '🔑 르브론은 속도를 줄이지 않아. 오히려 전속력으로 파고들어야 수비수가 피해!', sets: 3, reps: '각 방향 10회', rest: '35초', timerSec: 0, yt: 'full speed layup power finish drill lebron' },
+        ]
+      },
+      {
+        name: '포스트업 페이드어웨이',
+        difficulty: 'advanced',
+        desc: '골대 근처에서 수비를 등으로 밀어내고 몸을 뒤로 젖히며 슈팅. 르브론의 체력을 활용한 포스트 무브.',
+        steps: [
+          { name: '포스트 자세 및 피벗', desc: '골대 근처에서 수비를 등으로 막는 자세 연습. 피벗 풋을 고정하고 반대 발로 방향을 전환하며 슈팅 각도를 만든다.', tip: '🔑 엉덩이로 수비를 밀어야 해. 팔꿈치를 사용하면 파울!', sets: 3, reps: '15회', rest: '20초', timerSec: 0, yt: 'post up pivot footwork basketball drill' },
+          { name: '페이드어웨이 슈팅 폼', desc: '점프 하면서 몸을 옆이나 뒤로 젖히며 슈팅. 균형을 잃어도 슈팅이 들어가도록 팔로스루를 완전히 유지.', tip: '🔑 뒤로 젖혀도 팔로스루는 확실하게. 손끝이 골대를 가리켜야 해!', sets: 4, reps: '12슈팅', rest: '30초', timerSec: 0, yt: 'fadeaway jump shot drill basketball' },
+          { name: '포스트업 → 페이드어웨이 연결', desc: '골대 근처에서 수비를 등으로 막기 → 피벗으로 방향 전환 → 페이드어웨이 슈팅을 하나의 흐름으로. 실전 포스트업 무브.', tip: '🔑 천천히 연습해도 괜찮아. 자연스러워질 때까지 반복이 답이야!', sets: 3, reps: '10슈팅', rest: '35초', timerSec: 0, yt: 'post up fadeaway combination drill' },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'kobe',
+    emoji: '🐍',
+    name: '코비 브라이언트',
+    team: 'Los Angeles Lakers | SG (레전드)',
+    color: '#552583',
+    accentColor: '#FDB927',
+    bio: '미드레인지의 신. 완벽한 풋워크와 페이드어웨이로 어떤 수비도 뚫었던 역대 최고의 득점 머신.',
+    moves: [
+      {
+        name: '미드레인지 페이드어웨이',
+        difficulty: 'advanced',
+        desc: '엘보우(페인트 경계선 모서리)에서 드리블 후 뒤로 젖히며 슈팅. 코비의 가장 유명한 시그니처 무브.',
+        steps: [
+          { name: '엘보우 풋워크 기초', desc: '좌우 엘보우 포지션에서 피벗 연습. 포워드 피벗 → 뒤로 스텝 → 슈팅 자세. 발 위치가 정확해야 슈팅이 안정된다.', tip: '🔑 코비의 풋워크는 발레처럼 정확해. 발끝부터 신경 써!', sets: 4, reps: '각 방향 12회', rest: '20초', timerSec: 0, yt: 'kobe elbow mid range footwork drill' },
+          { name: '페이드어웨이 기본 폼', desc: '제자리에서 뒤로 점프하며 슈팅 폼 연습. 공중에서 뒤로 젖히면서도 팔꿈치가 안쪽으로 유지. 손목 스냅을 확실히.', tip: '🔑 뒤로 젖힌다고 팔꿈치가 벌어지면 안 돼. 팔꿈치는 항상 안으로!', sets: 3, reps: '15슈팅', rest: '25초', timerSec: 0, yt: 'fadeaway jumper form practice kobe' },
+          { name: '1-2 드리블 → 엘보우 페이드어웨이', desc: '드리블 1~2번 후 엘보우에서 피벗 → 페이드어웨이. 코비가 경기 중 가장 많이 사용한 패턴. 좌우 엘보우 각각 연습.', tip: '🔑 드리블 → 정지 → 피벗 → 슈팅, 네 단계가 끊김 없이 이어져야 해!', sets: 4, reps: '10슈팅', rest: '35초', timerSec: 0, yt: 'kobe mid range fadeaway elbow drill' },
+        ]
+      },
+      {
+        name: '터닝 숄더 페이크',
+        difficulty: 'intermediate',
+        desc: '어깨를 한 방향으로 돌리며 페인트를 주고 반대 방향으로 드라이브. 코비가 수비수를 무너뜨리는 핵심 페인트.',
+        steps: [
+          { name: '숄더 페이크 기본', desc: '공을 들고 서서 어깨와 시선을 한 방향으로 강하게 틀었다가 반대 방향으로 드라이브. 페인트의 설득력이 포인트.', tip: '🔑 눈도 같이 움직여야 해. 수비수는 눈을 따라가거든!', sets: 4, reps: '각 방향 10회', rest: '20초', timerSec: 0, yt: 'shoulder fake pump fake basketball drill' },
+          { name: '펌프 페이크 → 드라이브', desc: '슈팅 동작을 시작했다가 멈추고(펌프 페이크) 수비가 뛰면 드라이브. 수비수를 공중에 뜨게 만드는 기술.', tip: '🔑 펌프 페이크는 진짜 슈팅처럼 해야 먹혀. 어설프면 수비수가 안 속아!', sets: 3, reps: '15회', rest: '25초', timerSec: 0, yt: 'pump fake drive layup basketball drill' },
+          { name: '페이크 → 원스텝 풀업 슈팅', desc: '숄더 페이크 또는 펌프 페이크 후 드라이브 없이 원스텝으로 점프슛. 공간을 만들자마자 바로 슈팅으로 연결.', tip: '🔑 코비는 페이크 후 필요 없이 드라이브하지 않아. 공간이 생기면 바로 쏴!', sets: 4, reps: '12슈팅', rest: '30초', timerSec: 0, yt: 'kobe pump fake step back pull up jumper' },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'durant',
+    emoji: '🦢',
+    name: '케빈 듀란트',
+    team: 'Phoenix Suns | SF',
+    color: '#1D1160',
+    accentColor: '#E56020',
+    bio: '2m가 넘는 키에서 나오는 언스타퍼블 슈팅. 미드레인지와 스텝백 3점이 어떤 수비로도 막을 수 없는 이유.',
+    moves: [
+      {
+        name: 'KD 스텝백 3점슛',
+        difficulty: 'advanced',
+        desc: '드리블 중 갑자기 뒤로 물러서며 수비와 거리를 만들고 3점슛. KD의 키와 릴리즈 포인트가 결합된 언스타퍼블 무브.',
+        steps: [
+          { name: '3점 라인 스팟 슈팅', desc: '5개 위치에서 각 10슈팅. KD처럼 높은 릴리즈 포인트로 슈팅. 이마 위에서 릴리즈하는 연습을 집중적으로.', tip: '🔑 릴리즈 포인트가 높을수록 블로킹이 어려워. 이마 위에서 놓는 연습!', sets: 2, reps: '10슈팅×5위치', rest: '30초', timerSec: 0, yt: 'kevin durant high release three point shooting' },
+          { name: '드리블 스텝백 동작', desc: '드리블하다가 양발로 동시에 뒤로 물러서는 스텝백 동작. KD는 한 번에 1.5m를 물러선다. 균형 유지가 핵심.', tip: '🔑 뒤로 물러설 때 발이 어깨 너비로 착지해야 균형이 잡혀. 발이 모이면 안 돼!', sets: 4, reps: '15회', rest: '25초', timerSec: 0, yt: 'kevin durant step back move drill' },
+          { name: '1-2 드리블 → 스텝백 → 3점 연결', desc: '드리블 1~2번 → 스텝백으로 3점 라인 밖으로 이동 → 3점슛. 전체 시퀀스 연습. 수비수를 상상하며 실전처럼.', tip: '🔑 KD의 스텝백은 굉장히 빠르고 낮아. 빠른 스텝 후 균형을 찾는 게 어렵지만 핵심이야!', sets: 4, reps: '10슈팅', rest: '40초', timerSec: 0, yt: 'KD step back three pointer game drill' },
+        ]
+      },
+      {
+        name: 'KD 포스트 미드레인지',
+        difficulty: 'intermediate',
+        desc: '2m의 키로 포스트에서 턴어라운드 점프슛. 어떤 수비도 손이 닿지 않는 높은 릴리즈.',
+        steps: [
+          { name: '턴어라운드 점프슛 기초', desc: '골대를 등지고 서서 한 방향으로 피벗 → 점프슛. 몸을 돌리는 동시에 점프해야 박자가 맞는다.', tip: '🔑 돌면서 바로 점프! 돌고 나서 멈추면 수비가 따라붙어.', sets: 3, reps: '각 방향 10슈팅', rest: '25초', timerSec: 0, yt: 'turnaround jump shot drill basketball' },
+          { name: '드리블 → 포스트 미드레인지', desc: '드리블로 엘보우에 접근 → 피벗 → 높은 릴리즈 점프슛. KD 스타일 미드레인지 연습.', tip: '🔑 릴리즈를 최대한 높은 위치에서 해. 키가 작아도 점프력으로 높이를 만들 수 있어!', sets: 4, reps: '10슈팅', rest: '30초', timerSec: 0, yt: 'KD mid range post elbow jumper drill' },
+          { name: '3방향 미드레인지 서킷', desc: '좌 엘보우 → 정면 중거리 → 우 엘보우 순서로 각 5슈팅씩 쉬지 않고. KD의 전방위 미드레인지 능력을 따라하는 루틴.', tip: '🔑 위치마다 발 정렬을 다시 확인해. 빨리 이동하는 것보다 정확한 자세가 먼저!', sets: 3, reps: '15슈팅', rest: '35초', timerSec: 0, yt: 'mid range three spot shooting elbow drill' },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'kyrie',
+    emoji: '🎩',
+    name: '카이리 어빙',
+    team: 'Dallas Mavericks | PG',
+    color: '#00538C',
+    accentColor: '#002B5E',
+    bio: '역사상 가장 정교한 볼핸들러. 환상적인 드리블 콤보와 골대 아래 양손 피니시가 타의 추종을 불허.',
+    moves: [
+      {
+        name: '카이리 볼핸들링 콤보',
+        difficulty: 'intermediate',
+        desc: '크로스오버 → 비하인드 더 백 → 레그 스루를 환상적으로 엮는 드리블 콤보. 수비수를 완전히 무너뜨리는 카이리 스타일.',
+        steps: [
+          { name: '느린 콤보 드리블 연습', desc: '크로스오버 → 비하인드 더 백 → 레그 스루 순서를 천천히 반복. 각 동작을 정확하게 익히는 것이 목표. 공을 보지 않고 연습.', tip: '🔑 카이리도 처음엔 천천히 연습했어. 빠른 것보다 정확한 게 먼저!', sets: 3, reps: '1분', rest: '30초', timerSec: 60, yt: 'kyrie irving ball handling combo drill slow' },
+          { name: '속도 올리기', desc: '같은 콤보를 점점 빠르게. 천천히 → 중간 → 빠르게 단계별로 속도를 올린다. 빠른 속도에서도 공이 손에서 벗어나지 않아야.', tip: '🔑 속도를 올릴 때 손끝의 감각에 집중해. 손바닥이 아니라 손끝으로 컨트롤!', sets: 4, reps: '30초', rest: '25초', timerSec: 30, yt: 'kyrie ball handling speed drill combination' },
+          { name: '이동하며 콤보 드리블', desc: '콤보 드리블을 하면서 실제로 코트를 이동. 드리블하면서 방향을 바꾸는 것까지 연결. 수비수를 상상하며 실전처럼.', tip: '🔑 이동 중에도 콤보가 흔들리지 않으면 카이리 수준의 핸들링이야!', sets: 3, reps: '2분', rest: '40초', timerSec: 120, yt: 'kyrie irving dribble moves on the move drill' },
+        ]
+      },
+      {
+        name: '카이리 앰비덱스트러스 피니시',
+        difficulty: 'advanced',
+        desc: '양손 모두 자유자재로 레이업을 넣는 기술. 카이리는 오른쪽에서 왼손, 왼쪽에서 오른손으로 피니시해 수비를 완전히 혼란시킨다.',
+        steps: [
+          { name: '약한 손 레이업 집중', desc: '보통 왼손이 약한 손. 왼손만 사용한 레이업을 집중 연습. 처음엔 천천히 스텝을 밟으며 정확한 피니시 폼 만들기.', tip: '🔑 약한 손이 강해지면 수비가 예측할 수 없어져. 오늘부터 왼손 집중!', sets: 4, reps: '15회', rest: '25초', timerSec: 0, yt: 'weak hand layup finish drill basketball' },
+          { name: '역방향 레이업', desc: '오른쪽에서 드라이브 후 왼손으로 피니시, 왼쪽에서 드라이브 후 오른손으로 피니시. 수비수 반대편으로 올리는 연습.', tip: '🔑 수비수를 기준으로 먼 쪽 손으로 피니시해야 블로킹을 피할 수 있어!', sets: 4, reps: '각 방향 10회', rest: '30초', timerSec: 0, yt: 'reverse layup wrong hand finish drill' },
+          { name: '풀스피드 양손 레이업 서킷', desc: '오른쪽 오른손 → 오른쪽 왼손 → 왼쪽 왼손 → 왼쪽 오른손. 4가지 패턴을 쉬지 않고 반복. 카이리의 피니시 레퍼토리 그대로.', tip: '🔑 지칠수록 약한 손 피니시가 먼저 무너져. 힘들 때일수록 집중!', sets: 3, reps: '각 5회', rest: '40초', timerSec: 0, yt: 'kyrie ambidextrous layup finish circuit drill' },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'harden',
+    emoji: '🧔',
+    name: '제임스 하든',
+    team: 'LA Clippers | SG',
+    color: '#CE1141',
+    accentColor: '#C4CED4',
+    bio: '헤지테이션과 스텝백의 달인. 수비수를 완전히 얼려버리는 헤지테이션 드리블과 스텝백 3점이 시그니처.',
+    moves: [
+      {
+        name: '하든 헤지테이션 드라이브',
+        difficulty: 'intermediate',
+        desc: '드리블 중 갑자기 멈추는 척하다 폭발적으로 드라이브. 수비수를 완전히 멈추게 만드는 하든의 핵심 무브.',
+        steps: [
+          { name: '헤지테이션 타이밍 연습', desc: '드리블하다가 0.3초 멈추고 다시 폭발적으로 출발. 멈추는 타이밍에 몸무게를 한 발에 실어야 진짜처럼 보인다.', tip: '🔑 멈출 때 눈을 크게 뜨고 몸을 살짝 세우면 수비수가 더 잘 속아!', sets: 4, reps: '30초', rest: '20초', timerSec: 30, yt: 'harden hesitation dribble drill' },
+          { name: '헤지테이션 → 드라이브 연결', desc: '헤지테이션으로 수비를 멈추게 한 다음 폭발적인 첫 스텝으로 드라이브. 수비수가 반응하기 전에 이미 지나가야 한다.', tip: '🔑 헤지테이션 후 첫 스텝이 게임을 결정해. 최대한 크게 밟아!', sets: 4, reps: '각 방향 10회', rest: '25초', timerSec: 0, yt: 'hesitation drive first step explosive' },
+          { name: '헤지테이션 → 드라이브 → 레이업 완성', desc: '헤지테이션 → 드라이브 → 레이업까지 전체 시퀀스. 하든이 실전에서 사용하는 완성된 무브. 양쪽 방향 모두 연습.', tip: '🔑 속도를 줄이지 마. 헤지테이션 후 드라이브는 100% 속도로!', sets: 3, reps: '각 방향 8회', rest: '30초', timerSec: 0, yt: 'harden hesitation drive layup full move drill' },
+        ]
+      },
+      {
+        name: '하든 스텝백 3점',
+        difficulty: 'advanced',
+        desc: '드리블하다가 급작스럽게 뒤로 물러서며 3점슛. 하든은 스텝백과 3점을 가장 자연스럽게 연결하는 선수.',
+        steps: [
+          { name: '스텝백 타이밍 훈련', desc: '드리블 중 1-2 발로 뒤로 물러서는 타이밍 연습. 스텝백은 한 발씩 아니라 두 발이 동시에 리듬감 있게 뒤로.', tip: '🔑 하든의 스텝백은 굉장히 자연스러워. 어색하게 멈추지 말고 흐름 속에서 뒤로!', sets: 4, reps: '20회', rest: '20초', timerSec: 0, yt: 'harden step back move footwork drill' },
+          { name: '스텝백 → 3점슛 연결', desc: '스텝백으로 3점 라인 밖에 착지 → 바로 슈팅. 착지와 동시에 무릎을 굽혀 슈팅 에너지를 모아야 한다.', tip: '🔑 착지 직후 멈추지 말고 그 탄성으로 바로 점프해서 쏴야 빨라!', sets: 4, reps: '12슈팅', rest: '30초', timerSec: 0, yt: 'harden step back three pointer drill' },
+          { name: '하든 콤보: 헤지+스텝백+3점', desc: '헤지테이션으로 수비를 얼리고 → 스텝백으로 공간을 만들고 → 3점슛. 하든의 완성된 시그니처 시퀀스.', tip: '🔑 이 세 가지가 자연스럽게 연결되면 그게 바로 하든 무브야!', sets: 3, reps: '10슈팅', rest: '40초', timerSec: 0, yt: 'harden signature hesitation stepback three' },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'giannis',
+    emoji: '🦌',
+    name: '야니스 아데토쿤보',
+    team: 'Milwaukee Bucks | PF',
+    color: '#00471B',
+    accentColor: '#EEE1C6',
+    bio: '그리스 괴물. 압도적인 체격과 스피드로 유로스텝과 파워 덩크를 구사. 막을 수 없는 직선 드라이브가 시그니처.',
+    moves: [
+      {
+        name: '야니스 파워 유로스텝',
+        difficulty: 'intermediate',
+        desc: '빠른 직선 드라이브 후 골대 앞에서 좌우로 크게 스텝을 엇갈려 수비를 피하는 레이업. 야니스의 스텝 크기는 일반인의 2배.',
+        steps: [
+          { name: '유로스텝 기본 동작', desc: '달리다가 오른발 → 왼발(반대 방향)로 스텝하며 레이업. 첫 발은 크게, 두 번째 발로 균형을 잡고 올린다.', tip: '🔑 첫 발의 방향이 핵심이야. 수비수가 방향을 잘못 읽어야 성공!', sets: 4, reps: '각 방향 10회', rest: '25초', timerSec: 0, yt: 'euro step layup drill basketball' },
+          { name: '속도 붙여서 유로스텝', desc: '3점 라인 밖에서부터 달려와서 유로스텝. 야니스처럼 빠른 속도에서 스텝을 실행. 공을 한 손에 잡고 드라이브.', tip: '🔑 속도가 붙을수록 유로스텝의 효과가 커. 느린 유로스텝은 수비가 따라붙어!', sets: 4, reps: '각 방향 8회', rest: '30초', timerSec: 0, yt: 'euro step full speed drive drill giannis' },
+          { name: '파워 유로스텝 피니시', desc: '유로스텝 후 점프해서 가능하면 강하게 피니시. 골대 근처에서 파워 있게 올리는 연습. 접촉을 두려워하지 않기.', tip: '🔑 야니스는 파울을 얻어내면서 피니시해. 겁 없이 골대 안으로 파고들어!', sets: 3, reps: '각 방향 8회', rest: '35초', timerSec: 0, yt: 'giannis power euro step finish layup' },
+        ]
+      },
+      {
+        name: '야니스 직선 파워 드라이브',
+        difficulty: 'beginner',
+        desc: '포인트로부터 직선으로 달려와 골대로 돌진하는 드라이브. 야니스의 스피드와 파워가 결합된 막을 수 없는 무브.',
+        steps: [
+          { name: '직선 드라이브 스피드 훈련', desc: '3점 라인에서 골대까지 최대 속도로 드리블. 방향 전환 없이 직선으로. 폭발적인 첫 스텝이 핵심.', tip: '🔑 야니스는 직선 스피드가 NBA 최고야. 오늘은 너의 최고 속도를 내봐!', sets: 5, reps: '5회', rest: '30초', timerSec: 0, yt: 'straight line drive speed drill basketball' },
+          { name: '드라이브 → 레이업 피니시', desc: '전속력 드라이브 후 레이업. 속도를 죽이지 않고 그 에너지로 올리는 연습. 오른쪽/왼쪽 각각.', tip: '🔑 속도가 피니시의 에너지야. 멈추지 말고 속도를 레이업으로 전환해!', sets: 4, reps: '각 방향 8회', rest: '30초', timerSec: 0, yt: 'power drive layup finish at rim basketball' },
+          { name: '수비 반응 → 유로스텝 선택', desc: '직선 드라이브하다가 수비가 정면에 있으면 유로스텝, 없으면 그냥 레이업. 상황에 따라 선택하는 실전 연습.', tip: '🔑 야니스의 진짜 능력은 판단력이야. 무조건 유로스텝이 아니라 상황을 읽어!', sets: 3, reps: '10회', rest: '35초', timerSec: 0, yt: 'giannis read and react drive decision drill' },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'iverson',
+    emoji: '💎',
+    name: '앨런 아이버슨',
+    team: 'Philadelphia 76ers | PG (레전드)',
+    color: '#006BB6',
+    accentColor: '#ED174C',
+    bio: 'The Answer. 역사상 가장 빠른 크로스오버의 소유자. 작은 키로 NBA를 지배한 크로스오버의 신.',
+    moves: [
+      {
+        name: 'AI 크로스오버',
+        difficulty: 'intermediate',
+        desc: '낮고 빠른 크로스오버로 수비수의 발을 꼬이게 만드는 무브. 아이버슨은 크로스오버를 낮고 날카롭게 해서 수비가 반응할 시간을 없앤다.',
+        steps: [
+          { name: '낮은 자세 크로스오버 기초', desc: '무릎을 굽히고 최대한 낮은 자세에서 크로스오버. 공이 발 높이에서 이동하도록. 낮을수록 수비가 가로채기 어려워진다.', tip: '🔑 아이버슨의 크로스오버는 무릎 높이 아래야. 낮게 낮게!', sets: 4, reps: '30초', rest: '20초', timerSec: 30, yt: 'allen iverson low crossover drill' },
+          { name: '폭발적 크로스오버 가속', desc: '크로스오버 직후 반대 방향으로 폭발적 첫 스텝. 크로스오버는 공간을 만드는 것, 가속이 수비를 이기는 것.', tip: '🔑 크로스오버만 예쁘게 하면 소용없어. 크로스오버 후 첫 스텝이 진짜 무기야!', sets: 4, reps: '각 방향 12회', rest: '25초', timerSec: 0, yt: 'crossover explosive first step drill' },
+          { name: '크로스오버 → 풀업 슈팅 연결', desc: '크로스오버로 공간을 만들고 바로 풀업 점프슛. 아이버슨이 가장 많이 사용한 패턴. 크로스오버 후 멈추지 않고 바로 슈팅.', tip: '🔑 크로스오버-슈팅을 하나의 모션으로! 두 개로 나누면 타이밍을 놓쳐.', sets: 4, reps: '12슈팅', rest: '30초', timerSec: 0, yt: 'crossover pull up jumper drill iverson style' },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'doncic',
+    emoji: '🧙',
+    name: '루카 돈치치',
+    team: 'Dallas Mavericks | PG',
+    color: '#00538C',
+    accentColor: '#B8C4CA',
+    bio: '유럽에서 온 마법사. 스텝백 3점과 유로스텝, 그리고 뛰어난 패스 능력으로 현 NBA 최고의 플레이메이커.',
+    moves: [
+      {
+        name: '루카 매직 스텝백',
+        difficulty: 'advanced',
+        desc: '드리블 콤보 후 예측 불가능한 스텝백 3점. 루카는 언제 스텝백을 쓸지 모르게 랜덤하게 구사해 수비를 혼란시킨다.',
+        steps: [
+          { name: '드리블 콤보 리듬 잡기', desc: '크로스오버 → 비하인드 백을 리듬감 있게 반복. 언제든지 스텝백으로 전환할 수 있는 준비 상태를 유지하는 것이 목표.', tip: '🔑 루카는 드리블 콤보 중에 갑자기 스텝백을 써. 언제든 전환 가능하게!', sets: 4, reps: '30초', rest: '20초', timerSec: 30, yt: 'luka doncic dribble combo rhythm drill' },
+          { name: '3보 스텝백 동작', desc: '루카의 스텝백은 일반적인 스텝백보다 더 길게 물러선다. 3보 스텝백 연습: 오른발-왼발-오른발로 크게 뒤로.', tip: '🔑 크게 물러설수록 더 많은 공간이 생겨. 하지만 균형을 잃으면 안 돼!', sets: 4, reps: '20회', rest: '25초', timerSec: 0, yt: 'luka magic step back three move footwork' },
+          { name: '랜덤 타이밍 스텝백 → 3점', desc: '드리블 콤보 중 자기가 정한 신호(5번째 드리블, 방향 전환 시 등)에 스텝백 3점. 타이밍을 예측 불가하게 만드는 연습.', tip: '🔑 루카 매직의 핵심은 타이밍이야. 수비가 예측 못 하게 랜덤하게!', sets: 3, reps: '10슈팅', rest: '40초', timerSec: 0, yt: 'luka doncic step back three signature move' },
+        ]
+      }
+    ]
+  }
+];
+
+// ══════════════════════════════════════════
+// NBA 상태
+// ══════════════════════════════════════════
+let currentNbaPlayer = null;
+let currentNbaMove = null;
+let currentNbaDrillIndex = 0;
+let completedNbaDrills = [];
+let nbaTimerInterval = null;
+let nbaTimerRunning = false;
+let nbaTimerSeconds = 0;
+let nbaTimerMax = 0;
+
+// ══════════════════════════════════════════
+// NBA 선수 목록 렌더링
+// ══════════════════════════════════════════
+function renderNbaPlayers() {
+  const list = document.getElementById('nbaPlayerList');
+  const allPlayers = [...NBA_PLAYERS, ...customPlayers];
+
+  if (customPlayers.length > 0) {
+    // NBA 레전드 섹션
+    let html = `<div style="font-size:10px;color:var(--text-dim);letter-spacing:2px;font-weight:700;margin-bottom:10px;">NBA 레전드</div>`;
+    html += NBA_PLAYERS.map(p => playerCardHTML(p, false)).join('');
+    // 내가 추가한 선수 섹션
+    html += `<div style="font-size:10px;color:var(--orange);letter-spacing:2px;font-weight:700;margin:20px 0 10px;">내가 추가한 선수</div>`;
+    html += customPlayers.map(p => playerCardHTML(p, true)).join('');
+    list.innerHTML = html;
+  } else {
+    list.innerHTML = NBA_PLAYERS.map(p => playerCardHTML(p, false)).join('');
+  }
+}
+
+function playerCardHTML(p, isCustom) {
+  const deleteBtn = isCustom
+    ? `<button onclick="deleteCustomPlayer('${p.id}',event)"
+        style="background:rgba(255,50,50,0.15);border:none;border-radius:8px;padding:5px 9px;color:#ff6060;font-size:11px;cursor:pointer;flex-shrink:0;">삭제</button>`
+    : '';
+  return `
+    <div class="nba-player-card" onclick="showNbaPlayer('${p.id}')"
+         style="border-left: 4px solid ${p.accentColor}">
+      <div class="nba-player-emoji">${p.emoji}</div>
+      <div class="nba-player-info">
+        <div class="nba-player-name">${p.name}${isCustom ? ' <span style="font-size:10px;background:var(--orange-dim);color:var(--orange);padding:2px 6px;border-radius:5px;font-family:sans-serif;font-weight:400;">커스텀</span>' : ''}</div>
+        <div class="nba-player-team">${p.team}</div>
+        <div class="nba-player-signature">🎯 시그니처 무브 ${p.moves.length}개</div>
+        <div class="nba-player-tags">
+          ${p.moves.map(m => `<span class="nba-player-tag">${m.name}</span>`).join('')}
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
+        ${deleteBtn}
+        <div class="nba-arrow">›</div>
+      </div>
+    </div>`;
+}
+
+// ══════════════════════════════════════════
+// NBA 선수 상세 화면
+// ══════════════════════════════════════════
+function showNbaPlayer(playerId) {
+  currentNbaPlayer = getAllPlayers().find(p => p.id === playerId);
+  if (!currentNbaPlayer) return;
+  const p = currentNbaPlayer;
+
+  document.getElementById('nbaPlayerHero').innerHTML = `
+    <div class="nba-hero" style="background: linear-gradient(135deg, ${p.color}cc 0%, #1a1a1a 100%); border: 1px solid ${p.accentColor}44;">
+      <span class="nba-hero-emoji">${p.emoji}</span>
+      <div class="nba-hero-name" style="color:${p.accentColor}">${p.name}</div>
+      <div class="nba-hero-team">${p.team}</div>
+      <div class="nba-hero-desc">${p.bio}</div>
+    </div>
+  `;
+
+  const diffLabel = {beginner:'초급 ⭐', intermediate:'중급 ⭐⭐', advanced:'고급 ⭐⭐⭐'};
+  const diffClass = {beginner:'diff-beginner', intermediate:'diff-intermediate', advanced:'diff-advanced'};
+
+  document.getElementById('nbaPlayerContent').innerHTML = `
+    <div class="section-label">시그니처 무브</div>
+    ${p.moves.map((m, mi) => `
+      <div class="signature-card" style="border-left: 3px solid ${p.accentColor}">
+        <div class="signature-header">
+          <div class="signature-name">${m.name}</div>
+          <div class="signature-difficulty ${diffClass[m.difficulty]}">${diffLabel[m.difficulty]}</div>
+        </div>
+        <div class="signature-desc">${m.desc}</div>
+        <div class="signature-footer">
+          <div class="signature-steps">📋 ${m.steps.length}단계 훈련</div>
+          <button class="signature-start-btn"
+            style="background:${p.accentColor}; color: ${p.color === '#0D0D0D' ? '#fff' : '#000'}"
+            onclick="startNbaMove('${p.id}', ${mi})">훈련 시작 →</button>
+        </div>
+      </div>
+    `).join('')}
+  `;
+
+  showScreen('nba-player', null);
+}
+
+// ══════════════════════════════════════════
+// NBA 무브 훈련 시작
+// ══════════════════════════════════════════
+function startNbaMove(playerId, moveIdx) {
+  currentNbaPlayer = getAllPlayers().find(p => p.id === playerId);
+  if (!currentNbaPlayer) return;
+  currentNbaMove = currentNbaPlayer.moves[moveIdx];
+  currentNbaDrillIndex = 0;
+  completedNbaDrills = new Array(currentNbaMove.steps.length).fill(false);
+  stopNbaTimer();
+  loadNbaDrill(0);
+  showScreen('nba-training', null);
+}
+
+function loadNbaDrill(index) {
+  const step = currentNbaMove.steps[index];
+  const total = currentNbaMove.steps.length;
+  const pct = Math.round((index / total) * 100);
+
+  document.getElementById('nbaProgressText').textContent = `단계 ${index+1} / ${total}`;
+  document.getElementById('nbaProgressPct').textContent = pct + '%';
+  document.getElementById('nbaProgressFill').style.width = pct + '%';
+  document.getElementById('nbaDrillNumber').textContent = `STEP ${String(index+1).padStart(2,'0')}`;
+  document.getElementById('nbaDrillName').textContent = step.name;
+  document.getElementById('nbaDrillDesc').textContent = step.desc;
+  document.getElementById('nbaDrillTip').textContent = step.tip;
+  document.getElementById('nbaDrillSets').textContent = step.sets;
+  document.getElementById('nbaDrillReps').textContent = step.reps;
+  document.getElementById('nbaDrillRest').textContent = step.rest;
+
+  // SVG 시각화 (기존 buildDrillSVG 재사용 또는 기본)
+  const svgEl = document.getElementById('nbaDrillVisual');
+  if (typeof buildDrillSVG === 'function') {
+    const svg = buildDrillSVG(step.name);
+    svgEl.innerHTML = svg || buildDefaultSVG();
+  } else {
+    svgEl.innerHTML = buildDefaultSVG();
+  }
+
+  // 유튜브
+  document.getElementById('nbaYoutubeBtn').href =
+    'https://www.youtube.com/results?search_query=' + encodeURIComponent(step.yt);
+
+  // 타이머
+  const hasTimer = step.timerSec > 0;
+  document.getElementById('nbaTimerSection').style.display = hasTimer ? 'block' : 'none';
+  if (hasTimer) {
+    nbaTimerMax = step.timerSec;
+    nbaTimerSeconds = step.timerSec;
+    updateNbaTimerDisplay();
+  }
+  stopNbaTimer();
+  document.getElementById('nbaTimerStartBtn').textContent = '▶ 시작';
+  nbaTimerRunning = false;
+
+  // 완료 버튼
+  const btn = document.getElementById('nbaCompleteDrillBtn');
+  if (completedNbaDrills[index]) {
+    btn.textContent = '✅ 완료됨'; btn.classList.add('done-drill');
+  } else {
+    btn.textContent = index === total-1 ? '🏆 무브 마스터 완료!' : `✅ 완료 → 단계 ${index+2}`;
+    btn.classList.remove('done-drill');
+  }
+
+  renderNbaDrillDots();
+}
+
+function buildDefaultSVG() {
+  return `<svg viewBox="0 0 320 160" xmlns="http://www.w3.org/2000/svg" style="background:#111">
+    <rect width="320" height="160" fill="#1a3a1a"/>
+    <rect x="10" y="10" width="300" height="140" rx="4" fill="none" stroke="#2a6a2a" stroke-width="1.5"/>
+    <circle cx="160" cy="78" r="8" fill="#FF6B1A"/>
+    <line x1="160" y1="86" x2="160" y2="100" stroke="#FF6B1A" stroke-width="3"/>
+    <line x1="150" y1="92" x2="170" y2="92" stroke="#FF6B1A" stroke-width="2.5"/>
+    <line x1="160" y1="100" x2="152" y2="118" stroke="#FF6B1A" stroke-width="2.5"/>
+    <line x1="160" y1="100" x2="168" y2="118" stroke="#FF6B1A" stroke-width="2.5"/>
+    <circle cx="160" cy="130" r="7" fill="#FF6B1A" style="animation:bounce-ball 0.6s ease-in-out infinite"/>
+  </svg>`;
+}
+
+function renderNbaDrillDots() {
+  const total = currentNbaMove.steps.length;
+  let html = '';
+  for (let i = 0; i < total; i++) {
+    let cls = completedNbaDrills[i] ? 'completed' : (i === currentNbaDrillIndex ? 'current' : '');
+    html += `<div class="drill-dot ${cls}" onclick="loadNbaDrill(${i})">${i+1}</div>`;
+  }
+  document.getElementById('nbaDrillDots').innerHTML = html;
+}
+
+function completeNbaDrill() {
+  if (completedNbaDrills[currentNbaDrillIndex]) return;
+  completedNbaDrills[currentNbaDrillIndex] = true;
+  stopNbaTimer();
+  if (completedNbaDrills.every(Boolean)) {
+    // 완료 화면 재활용
+    document.getElementById('finishDrills').textContent = currentNbaMove.steps.length;
+    document.getElementById('finishTime').textContent = '-';
+    document.getElementById('finishSub').textContent =
+      `"${currentNbaMove.name}" 마스터 완료! ${currentNbaPlayer.name}에 한 걸음 가까워졌다 🔥`;
+    document.getElementById('progressText').textContent = '완료!';
+    document.getElementById('progressPct').textContent = '100%';
+    document.getElementById('progressFill').style.width = '100%';
+    showScreen('finish', null);
+    return;
+  }
+  let next = currentNbaDrillIndex + 1;
+  while (next < currentNbaMove.steps.length && completedNbaDrills[next]) next++;
+  if (next < currentNbaMove.steps.length) { currentNbaDrillIndex = next; loadNbaDrill(next); }
+}
+
+// NBA 타이머
+function toggleNbaTimer() {
+  if (nbaTimerRunning) { stopNbaTimer(); document.getElementById('nbaTimerStartBtn').textContent = '▶ 재개'; }
+  else { startNbaTimerCount(); document.getElementById('nbaTimerStartBtn').textContent = '⏸ 일시정지'; }
+}
+function startNbaTimerCount() {
+  nbaTimerRunning = true;
+  nbaTimerInterval = setInterval(() => {
+    if (nbaTimerSeconds <= 0) {
+      stopNbaTimer();
+      document.getElementById('nbaTimerDisplay').textContent = '완료! 🎉';
+      document.getElementById('nbaTimerDisplay').className = 'timer-display done';
+      document.getElementById('nbaTimerStartBtn').textContent = '▶ 다시';
+      nbaTimerSeconds = nbaTimerMax; return;
+    }
+    nbaTimerSeconds--;
+    updateNbaTimerDisplay();
+    document.getElementById('nbaTimerDisplay').className =
+      'timer-display' + (nbaTimerSeconds <= 5 ? ' warning' : '');
+  }, 1000);
+}
+function stopNbaTimer() {
+  clearInterval(nbaTimerInterval); nbaTimerInterval = null; nbaTimerRunning = false;
+}
+function resetNbaTimer() {
+  stopNbaTimer(); nbaTimerSeconds = nbaTimerMax; updateNbaTimerDisplay();
+  document.getElementById('nbaTimerDisplay').className = 'timer-display';
+  document.getElementById('nbaTimerStartBtn').textContent = '▶ 시작';
+}
+function updateNbaTimerDisplay() {
+  const m = Math.floor(nbaTimerSeconds/60), s = nbaTimerSeconds%60;
+  document.getElementById('nbaTimerDisplay').textContent =
+    String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+}
+
+
+// ══════════════════════════════════════════
+// 커스텀 선수 관리
+// ══════════════════════════════════════════
+let customPlayers = JSON.parse(localStorage.getItem('bbCustomPlayers') || '[]');
+let selectedDifficulty = 'intermediate';
+let editingPlayerId = null;
+
+function saveCustomPlayersToStorage() {
+  localStorage.setItem('bbCustomPlayers', JSON.stringify(customPlayers));
+}
+
+// 모든 선수 합치기 (기본 + 커스텀)
+function getAllPlayers() {
+  return [...NBA_PLAYERS, ...customPlayers];
+}
+
+// showNbaPlayer / startNbaMove에서 getAllPlayers() 사용
+function showNbaPlayerById(playerId) {
+  const all = getAllPlayers();
+  currentNbaPlayer = all.find(p => p.id === playerId);
+  if (!currentNbaPlayer) return;
+  showNbaPlayerUI(currentNbaPlayer);
+}
+
+// ── 모달 열기/닫기 ──
+function openAddPlayerModal() {
+  selectedDifficulty = 'intermediate';
+  document.getElementById('addEmoji').value = '🏀';
+  document.getElementById('addName').value = '';
+  document.getElementById('addTeam').value = '';
+  document.getElementById('addBio').value = '';
+  document.getElementById('addMoveName').value = '';
+  document.getElementById('addMoveDesc').value = '';
+  // 난이도 버튼 초기화
+  document.querySelectorAll('.diff-select-btn').forEach(b => {
+    b.style.background = 'var(--dark3)';
+    b.style.color = 'var(--text-dim)';
+    b.style.borderColor = 'var(--dark4)';
+  });
+  document.querySelector('[data-diff="intermediate"]').style.background = 'var(--orange)';
+  document.querySelector('[data-diff="intermediate"]').style.color = 'white';
+  // 단계 초기화 (기본 1단계)
+  document.getElementById('stepsContainer').innerHTML = '';
+  addStep();
+  document.getElementById('addPlayerModal').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeAddPlayerModal() {
+  document.getElementById('addPlayerModal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function closeEditModal() {
+  document.getElementById('editPlayerModal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+// ── 난이도 선택 ──
+function selectDiff(diff, btn) {
+  selectedDifficulty = diff;
+  document.querySelectorAll('.diff-select-btn').forEach(b => {
+    b.style.background = 'var(--dark3)';
+    b.style.color = 'var(--text-dim)';
+    b.style.borderColor = 'var(--dark4)';
+  });
+  btn.style.background = 'var(--orange)';
+  btn.style.color = 'white';
+  btn.style.borderColor = 'var(--orange)';
+}
+
+// ── 훈련 단계 추가 ──
+let stepCount = 0;
+function addStep() {
+  const container = document.getElementById('stepsContainer');
+  if (container.children.length >= 3) {
+    alert('최대 3단계까지 추가할 수 있어요!'); return;
+  }
+  stepCount++;
+  const idx = container.children.length + 1;
+  const div = document.createElement('div');
+  div.className = 'step-block';
+  div.style.cssText = 'background:var(--dark3);border:1px solid var(--dark4);border-radius:14px;padding:16px;margin-bottom:12px;';
+  div.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <div style="font-size:12px;font-weight:700;color:var(--orange);">STEP ${idx}</div>
+      <button onclick="removeStep(this)" style="background:none;border:none;color:var(--text-dim);font-size:16px;cursor:pointer;">✕</button>
+    </div>
+    <div style="margin-bottom:8px;">
+      <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px;">단계 이름 *</div>
+      <input type="text" class="step-name" placeholder="예: 기초 폼 연습"
+        style="width:100%;background:var(--dark4);border:none;border-radius:8px;padding:9px;color:var(--text);font-size:13px;font-family:'Noto Sans KR',sans-serif;">
+    </div>
+    <div style="margin-bottom:8px;">
+      <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px;">설명</div>
+      <textarea class="step-desc" rows="2" placeholder="이 단계에서 할 훈련..."
+        style="width:100%;background:var(--dark4);border:none;border-radius:8px;padding:9px;color:var(--text);font-size:13px;resize:none;font-family:'Noto Sans KR',sans-serif;"></textarea>
+    </div>
+    <div style="margin-bottom:8px;">
+      <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px;">코칭 팁</div>
+      <input type="text" class="step-tip" placeholder="🔑 핵심 포인트..."
+        style="width:100%;background:var(--dark4);border:none;border-radius:8px;padding:9px;color:var(--text);font-size:13px;font-family:'Noto Sans KR',sans-serif;">
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+      <div>
+        <div style="font-size:10px;color:var(--text-dim);margin-bottom:3px;">세트</div>
+        <input type="number" class="step-sets" value="3" min="1" max="10"
+          style="width:100%;background:var(--dark4);border:none;border-radius:8px;padding:8px;color:var(--text);font-size:14px;text-align:center;">
+      </div>
+      <div>
+        <div style="font-size:10px;color:var(--text-dim);margin-bottom:3px;">횟수/시간</div>
+        <input type="text" class="step-reps" value="10회" placeholder="10회"
+          style="width:100%;background:var(--dark4);border:none;border-radius:8px;padding:8px;color:var(--text);font-size:13px;text-align:center;font-family:'Noto Sans KR',sans-serif;">
+      </div>
+      <div>
+        <div style="font-size:10px;color:var(--text-dim);margin-bottom:3px;">휴식</div>
+        <input type="text" class="step-rest" value="30초" placeholder="30초"
+          style="width:100%;background:var(--dark4);border:none;border-radius:8px;padding:8px;color:var(--text);font-size:13px;text-align:center;font-family:'Noto Sans KR',sans-serif;">
+      </div>
+    </div>`;
+  container.appendChild(div);
+  // STEP 번호 재정렬
+  reorderStepNumbers();
+}
+
+function removeStep(btn) {
+  btn.closest('.step-block').remove();
+  reorderStepNumbers();
+}
+
+function reorderStepNumbers() {
+  document.querySelectorAll('#stepsContainer .step-block').forEach((el, i) => {
+    el.querySelector('div').textContent = `STEP ${i+1}`;
+  });
+}
+
+// ── 저장 ──
+function saveCustomPlayer() {
+  const name = document.getElementById('addName').value.trim();
+  const moveName = document.getElementById('addMoveName').value.trim();
+  if (!name) { alert('선수 이름을 입력해주세요!'); return; }
+  if (!moveName) { alert('시그니처 무브 이름을 입력해주세요!'); return; }
+
+  const stepBlocks = document.querySelectorAll('#stepsContainer .step-block');
+  if (stepBlocks.length === 0) { alert('훈련 단계를 최소 1개 추가해주세요!'); return; }
+
+  const steps = [];
+  let valid = true;
+  stepBlocks.forEach((block, i) => {
+    const sName = block.querySelector('.step-name').value.trim();
+    if (!sName) { alert(`STEP ${i+1}의 이름을 입력해주세요!`); valid = false; return; }
+    steps.push({
+      name: sName,
+      desc: block.querySelector('.step-desc').value.trim() || '설명 없음',
+      tip: block.querySelector('.step-tip').value.trim() || '열심히 연습해!',
+      sets: parseInt(block.querySelector('.step-sets').value) || 3,
+      reps: block.querySelector('.step-reps').value.trim() || '10회',
+      rest: block.querySelector('.step-rest').value.trim() || '30초',
+      timerSec: 0,
+      yt: name + ' ' + moveName + ' basketball drill'
+    });
+  });
+  if (!valid) return;
+
+  const player = {
+    id: 'custom_' + Date.now(),
+    emoji: document.getElementById('addEmoji').value || '🏀',
+    name: name,
+    team: document.getElementById('addTeam').value.trim() || '커스텀 선수',
+    color: '#252525',
+    accentColor: '#FF6B1A',
+    bio: document.getElementById('addBio').value.trim() || '직접 추가한 선수',
+    isCustom: true,
+    moves: [{
+      name: moveName,
+      difficulty: selectedDifficulty,
+      desc: document.getElementById('addMoveDesc').value.trim() || '시그니처 무브',
+      steps: steps
+    }]
+  };
+
+  customPlayers.push(player);
+  saveCustomPlayersToStorage();
+  closeAddPlayerModal();
+  renderNbaPlayers();
+  alert(`${name} 선수가 추가됐어요! 🎉`);
+}
+
+// ── 커스텀 선수 삭제 ──
+function deleteCustomPlayer(playerId, e) {
+  e.stopPropagation();
+  if (!confirm('이 선수를 삭제할까요?')) return;
+  customPlayers = customPlayers.filter(p => p.id !== playerId);
+  saveCustomPlayersToStorage();
+  renderNbaPlayers();
+}
+
+// ══════════════════════════════════════════
+// renderNbaPlayers 오버라이드 (커스텀 포함)
+// ══════════════════════════════════════════
 renderWeeklyRecords();
 </script>
 </body>
